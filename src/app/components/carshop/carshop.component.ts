@@ -843,7 +843,6 @@ export class CarshopComponent implements OnInit, AfterViewInit {
                 var preciod2 = preciod.innerText.replace('USD','').replace('Bs.S','').replace('.', '').replace(',', '.') as any
                 totald.innerText=this.formatCurrency((parseFloat(preciod2)*newValue),'USD').toString();
             } else {
-                console.warn(`No se encontró el elemento preciod_${codigo}`);
                 // Aquí podrías agregar un manejo adicional si el elemento no existe,
                 // como asignar un valor por defecto a totald o simplemente no hacer nada.
                 if (totald) {
@@ -858,7 +857,6 @@ export class CarshopComponent implements OnInit, AfterViewInit {
                 var preciobs2 = preciobs.innerText.replace('USD','').replace('Bs.S','').replace('.', '').replace(',', '.') as any
                 totalbs.innerText=this.formatCurrency((parseFloat(preciobs2)*newValue),'VES').toString();
             } else {
-                console.warn(`No se encontró el elemento preciobs_${codigo}`);
                 // Aquí podrías agregar un manejo adicional si el elemento no existe.
                 if (totalbs) {
                     totalbs.innerText = this.formatCurrency(0, 'VES').toString(); // Ejemplo de valor por defecto
