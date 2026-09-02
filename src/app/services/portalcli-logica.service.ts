@@ -9,6 +9,7 @@ import { API_URLINTER } from '../app.config';
 import Swal from 'sweetalert2';
 import { Observable, of } from 'rxjs';
 import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -272,5 +273,53 @@ export class PortalcliLogicaService {
         },
       });
     }
+
+  obtenerItemCarrito(codigo: string, codCli: string, almacen: string): Observable<any> {
+    const usuario = this.authService.getCodCli();
+    const token = this.authService.getToken();
+    const formData = new FormData();
+    const headers = new HttpHeaders({
+      'X-Auth-Token': `${token}`
+    });
+    formData.append('codCli', codCli);
+    formData.append('almacen', almacen);
+    formData.append('usuario', usuario ?? '');
+
+    const apiUrl = `${API_URL}opencardb`;
+
+    return this.http.post(apiUrl, formData, { headers }).pipe(
+      map((response: any) => {
+        const items = Array.isArray(response.data) ? response.data : [];
+        return items.find((item: any) => item.codigoa === codigo) || null;
+      })
+    );
+  }
+
+  actualizarCantidad(id: string, codigo: string, cantidad: number): Observable<any> {
+    const token = this.authService.getToken();
+    const formData = new FormData();
+    const headers = new HttpHeaders({
+      'X-Auth-Token': `${token}`
+    });
+    formData.append('id', id);
+    formData.append('codigo', codigo);
+    formData.append('cantidad', cantidad.toString());
+
+    const apiUrl = `${API_URL}totalizacampo`;
+    return this.http.post(apiUrl, formData, { headers });
+  }
+
+  eliminarItemCarrito(id: string, codigo: string): Observable<any> {
+    const token = this.authService.getToken();
+    const formData = new FormData();
+    const headers = new HttpHeaders({
+      'X-Auth-Token': `${token}`
+    });
+    formData.append('id', id);
+    formData.append('codigo', codigo);
+
+    const apiUrl = `${API_URL}eliminareg`;
+    return this.http.post(apiUrl, formData, { headers });
+  }
 
 } 

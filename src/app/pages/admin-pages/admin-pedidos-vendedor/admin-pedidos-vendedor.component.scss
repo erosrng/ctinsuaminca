@@ -1,3 +1,5 @@
+@use '../../../../styles/variables.scss' as vars;
+
 * {
     transition: all ease-in-out 0.25s;
 }
@@ -23,7 +25,7 @@
 
 .card {
     margin-bottom: 1rem;
-    border: 1px solid #6cc32c;
+    border: 1px solid vars.$text-color2;
     border-radius: 10px;
     padding: 1rem;
     height: 100%;
@@ -43,7 +45,7 @@
 }
 
 .btn-clear:hover {
-    background: #6cc32c;
+    background: vars.$text-color2;
 }
 
 .container-max {
@@ -53,7 +55,7 @@
 }
 
 th {
-  background: #6cc32c !important;
+  background: vars.$text-color2 !important;
   color: #FFF !important;
   text-align: center !important;
   font-weight: 900 !important;

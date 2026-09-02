@@ -101,7 +101,37 @@ export class AdminHomeComponent implements OnInit { // Implementa OnInit
         type: "bar"
       },
       title: {
-        text: "Unidades Vendidas por Vendedor"
+        text: "Unidades Vendidas por Vendedor",
+        style: {
+          color: '#053354',
+          fontWeight: 600
+        }
+      },
+      colors: ['#0F7243'],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'vertical',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#45cbda'],
+          inverseColors: false,
+          opacityFrom: 1,
+          opacityTo: 0.8,
+          stops: [0, 100]
+        }
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          horizontal: false,
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          colors: ['#053354']
+        }
       },
       xaxis: {
         categories: []
@@ -120,7 +150,37 @@ export class AdminHomeComponent implements OnInit { // Implementa OnInit
         type: "bar"
       },
       title: {
-        text: "Total Vendido por Vendedor ($)"
+        text: "Total Vendido por Vendedor ($)",
+        style: {
+          color: '#053354',
+          fontWeight: 600
+        }
+      },
+      colors: ['#8b7b46'],
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shade: 'dark',
+          type: 'vertical',
+          shadeIntensity: 0.5,
+          gradientToColors: ['#FEC100'],
+          inverseColors: false,
+          opacityFrom: 1,
+          opacityTo: 0.8,
+          stops: [0, 100]
+        }
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          horizontal: false,
+        }
+      },
+      dataLabels: {
+        enabled: true,
+        style: {
+          colors: ['#053354']
+        }
       },
       xaxis: {
         categories: []
@@ -214,7 +274,9 @@ cargarResumenVendedores() {
             };
             this.totalVendidoPorVendedorChart.yaxis = {
               labels: {
-                
+                formatter: (value: number) => {
+                  return '$ ' + value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                }
               }
             };
 

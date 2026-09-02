@@ -13,6 +13,12 @@
         </a>
     </li>
 
+    <li class="nav-item" >
+      <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin/retenciones')">
+        <i class="fas fa-file-invoice-dollar"></i><span *ngIf="isMenuOpen"> Facturas Abonadas</span>
+      </a>
+  </li>
+
       <li class="nav-item" >
         <a class="nav-link menu__link" href="javascript:void(0)" (click)="logout()">
           <i class="fas fa-sign-out-alt"></i><span *ngIf="isMenuOpen"> Cerrar sesión</span>

@@ -66,6 +66,12 @@
           </a>
         </li>
 
+        <li class="nav-item" *ngIf="usuariopadre === 'MASTERPROV'">
+          <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin/retenciones')">
+            <i class="fas fa-file-invoice-dollar"></i><span *ngIf="isMenuOpen"> Facturas Abonadas</span>
+          </a>
+        </li>
+
         <!-- <li class="nav-item" *ngIf="usuariopadre === 'MASTERPROV'">
           <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin/pedidos')">
             <i class="fas fa-circle-nodes"></i><span *ngIf="isMenuOpen"> Detalles por vendedor</span>

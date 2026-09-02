@@ -1,18 +1,24 @@
 @use '../../../styles/variables.scss' as vars;
 
+* {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .menu__general {
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 0 20px rgba(5, 51, 84, 0.08);
     margin-top: 6rem;
     position: relative;
-    border-right: 1px solid vars.$lineas-separetor;
+    border-right: 1px solid rgba(15, 114, 67, 0.2);
     transition: width 0.3s ease;
-    width: 250px; 
+    width: 250px;
     height: 100%;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
 }
 
 .menu__general.closedmenu {
-    width: 3.4rem; 
+    width: 3.4rem;
 }
+
 .menu__link.closedmenu {
     width: 0;
     border: none;
@@ -23,47 +29,104 @@
     flex-direction: column;
     height: 100%;
     padding-top: 7vh;
+    padding: 1.5rem 0.8rem 1.5rem 0.8rem;
     width: 20vw;
+    gap: 0.4rem;
+}
+
+.menu__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .menu__link {
     display: flex;
     align-items: center;
-    padding: 1rem;
-    color: #333;
-    border-bottom: 1px solid #dee2e6;
-    /* width: 80%; */
+    padding: 0.9rem 1.2rem;
+    color: vars.$menu-color;
+    border: none;
     width: auto;
+    position: relative;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 1.4rem;
+    text-decoration: none;
+    gap: 1rem;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
-// .menu__link:hover {
-//     background-color: #e9ecef;
-// }
 
 .menu__link i {
-    margin-right: 10px;
+    font-size: 1.6rem;
+    width: 2rem;
+    text-align: center;
+    color: vars.$text-color2;
+    transition: color 0.25s ease;
+}
+
+.menu__link:hover {
+    background: rgba(15, 114, 67, 0.12);
+    color: vars.$text-color2;
+    transform: translateX(4px);
+}
+
+.menu__link:hover i {
+    color: vars.$text-color2;
+    transform: scale(1.1);
+}
+
+.menu__link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
+    background: linear-gradient(180deg, vars.$text-color2, vars.$text-color2-hover);
+    opacity: 0;
+    transform: scaleY(0);
+    transition: all 0.3s ease;
+}
+
+.menu__link:hover::before {
+    opacity: 1;
+    transform: scaleY(1);
 }
 
 .menu__dropdown-content {
-    background-color: #f8f9fa;
-    border-radius: 5px;
-    margin-left: 10px;
-    padding: 5px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(15, 114, 67, 0.25);
+    border-radius: 12px;
+    margin: 0.4rem 0 0.4rem 1rem;
+    padding: 0.4rem;
+    box-shadow: 0 4px 16px rgba(5, 51, 84, 0.08);
+    overflow: hidden;
 }
 
 .menu__dropdown-link {
-    padding: 8px 15px;
-    color: #333;
+    padding: 0.7rem 1rem;
+    color: vars.$menu-color;
     text-decoration: none;
     display: block;
+    border-radius: 8px;
+    font-size: 1.3rem;
+    transition: all 0.2s ease;
 }
 
-// .menu__dropdown-link:hover {
-//     background-color: #e9ecef;
-// }
+.menu__dropdown-link:hover {
+    background: rgba(15, 114, 67, 0.12);
+    padding-left: 1.4rem;
+    color: vars.$text-color2;
+}
 
 .menu__dropdown-icon {
     transition: transform 0.3s ease-in-out;
     margin-left: auto;
+    font-size: 1.2rem;
 }
 
 .menu__link[aria-expanded="true"] .menu__dropdown-icon {
@@ -71,11 +134,26 @@
 }
 
 .menu__dropdown-content {
-    padding-left: 2rem;
+    padding-left: 1rem;
 }
 
 .menu__footer {
-    margin-top: 45rem;
-    color: vars.$menu-color;
+    margin-top: auto;
+    padding: 1.5rem;
+    color: vars.$text-color2;
     text-align: center;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    border-top: 1px solid rgba(15, 114, 67, 0.2);
+    margin-top: 4rem;
+}
+
+@media (max-width: 992px) {
+    .menu__content {
+        width: 60vw;
+    }
+
+    .menu__link {
+        font-size: 1.3rem;
+    }
 }

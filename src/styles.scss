@@ -1,3 +1,4 @@
+@use './styles/variables.scss' as vars;
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 .mat-mdc-select-value,
@@ -6,7 +7,6 @@
 .mat-mdc-option .mdc-list-item__primary-text{
   font-family: "Alexandria", Helvetica, sans-serif !important;
 }
-
 
 @font-face {
     font-family: "Alexandria";
@@ -50,8 +50,8 @@ body { margin: 0;}
 }
 
 .mat-mdc-paginator { 
-  background: #0084c5 !important;
-  color: #FFF !important;
+  background: vars.$principal-color !important;
+  color: vars.$background-fondo !important;
 }
 
 .mat-drawer-container {
@@ -64,7 +64,7 @@ body { margin: 0;}
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: rgb(255 255 255);
-  border: 1px solid #6bc32d;
+  border: 1px solid vars.$text-color2;
 }
 //ESTO ES LO QUE NO MOSTRABA LOS COLORES EN EL SELECTORES DEL CARRITO
 /*.mat-mdc-select {
@@ -79,13 +79,13 @@ body { margin: 0;}
 .mat-button-toggle-appearance-standard {
   padding: 1rem !important;
   font-size: 1.5rem !important;
-  background: #6bc32d !important;
+  background: vars.$text-color2 !important;
   color: #FFF !important;
 }
 
 .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
   color: #FFF !important;
-  background-color: #0284c5 !important;
+  background-color: vars.$principal-color !important;
   font-size: 1.5rem !important;
   font-weight: 500 !important;
 }

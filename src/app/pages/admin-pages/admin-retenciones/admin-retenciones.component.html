@@ -1,0 +1,175 @@
+<app-nav-bar (openMenu)="openMenu($event)"></app-nav-bar>
+<div style="display: flex; flex-direction: row;">
+    <mat-sidenav-container>
+        <mat-sidenav mode="over" [opened]="toggleMenu">
+          <app-side-bar></app-side-bar>
+        </mat-sidenav>
+        <mat-sidenav-content class="w-100">
+            <div class="container-fluid container-max">
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Retenciones de IVA</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-4">
+                                        <input type="text" class="form-control search-input" placeholder="Buscar por tipo, nro, proveedor, RIF, banco, retención..." [(ngModel)]="searchText" (input)="applyFilter()">
+                                    </div>
+                                    <div class="col-8 text-end">
+                                        <span class="total-registros">Total registros: {{filteredRetenciones.length}}</span>
+                                    </div>
+                                </div>
+
+                                <div class="table-responsive" *ngIf="filteredRetenciones.length > 0">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 40px;"></th>
+                                                <th>Tipo</th>
+                                                <th>Nro</th>
+                                                <th>Fecha</th>
+                                                <th>Retención</th>
+                                                <th>Monto</th>
+                                                <th>Abonos</th>
+                                                <th>Banco</th>
+                                                <th>Proveedor</th>
+                                                <th>RIF</th>
+                                                <th>Tasa</th>
+                                                <th>Monto $</th>
+                                                <th>Comp. Retención</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <ng-container *ngFor="let r of paginatedRetenciones">
+                                            <tr class="main-row" [class.has-retention]="r.idriva" (click)="toggleDetalle(r)" style="cursor: pointer;">
+                                                <td>
+                                                    <i class="fas fa-chevron-right expand-icon" *ngIf="!r.expanded"></i>
+                                                    <i class="fas fa-chevron-down expand-icon" *ngIf="r.expanded"></i>
+                                                </td>
+                                                <td><span class="badge" [ngClass]="{'bg-primary': r.tipo_doc === 'FC', 'bg-warning': r.tipo_doc === 'NC', 'bg-danger': r.tipo_doc === 'ND'}">{{r.tipo_doc}}</span></td>
+                                                <td>{{r.numero}}</td>
+                                                <td>{{r.fecha}}</td>
+                                                <td class="text-end">{{r.reten | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.monto | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.abonos | number:'1.2-2'}}</td>
+                                                <td>{{r.banco}}</td>
+                                                <td>{{r.nombre}}</td>
+                                                <td>{{r.rif}}</td>
+                                                <td class="text-end">{{r.tasadolar | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.montod | number:'1.2-2'}}</td>
+                                                <td>
+                                                    <span *ngIf="r.idriva" class="comp-retencion" [attr.title]="'Comprobante de retención: ' + r.nrocomp">
+                                                        <i class="fas fa-file-invoice"></i>
+                                                        <span class="comp-num">{{r.nrocomp}}</span>
+                                                    </span>
+                                                    <span *ngIf="!r.idriva" class="badge badge-no-retention" [attr.title]="'Este documento no tiene comprobante de retención'">
+                                                        <i class="fas fa-minus-circle"></i> Sin retención
+                                                    </span>
+                                                </td>
+                                                <td (click)="$event.stopPropagation()">
+                                                    <button *ngIf="r.idriva" class="btn btn-sm btn-success" (click)="imprimir(r.idriva)" title="Imprimir retención">
+                                                        <i class="fas fa-print"></i>
+                                                    </button>
+                                                    <button *ngIf="!r.idriva" class="btn btn-sm btn-secondary" disabled title="Sin retención para imprimir">
+                                                        <i class="fas fa-print"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="r.expanded" class="detail-row">
+                                                <td colspan="14">
+                                                    <div class="detail-container" *ngIf="!r.loading && !r.error">
+                                                        <div class="detail-header">
+                                                            <strong>Detalle del documento {{r.tipo_doc}} {{r.numero}}</strong>
+                                                            <span *ngIf="r.tipo_doc === 'NC'" class="detail-empty">Este documento no tiene abonos ni anticipos.</span>
+                                                            <span *ngIf="r.tipo_doc !== 'NC' && r.detalle && r.detalle.length === 0" class="detail-empty">Sin registros de detalle</span>
+                                                        </div>
+                                                        <div class="table-responsive" *ngIf="r.tipo_doc !== 'NC' && r.detalle && r.detalle.length > 0">
+                                                            <table class="table table-sm detail-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <ng-container *ngFor="let key of objectKeys(r.detalle[0])">
+                                                                            <th>{{columnName(key)}}</th>
+                                                                        </ng-container>
+                                                                        <th>Documentos afectados</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr *ngFor="let d of r.detalle">
+                                                                        <ng-container *ngFor="let key of objectKeys(d)">
+                                                                            <td>
+                                                                                <ng-container *ngIf="key === 'tipoppro'">
+                                                                                    <span class="tag tag-abono" *ngIf="d.tipoppro === 'AB'"><i class="fas fa-hand-holding-usd"></i> Abono</span>
+                                                                                    <span class="tag tag-anticipo" *ngIf="d.tipoppro === 'AN'"><i class="fas fa-coins"></i> Anticipo</span>
+                                                                                    <span class="tag tag-nc" *ngIf="d.tipoppro === 'NC'"><i class="fas fa-file-invoice"></i> NC</span>
+                                                                                    <span class="tag tag-otro" *ngIf="d.tipoppro !== 'AB' && d.tipoppro !== 'AN' && d.tipoppro !== 'NC'">{{d.tipoppro}}</span>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="key === 'numppro'">
+                                                                                    <span class="numppro">{{d['numppro']}}</span>
+                                                                                </ng-container>
+                                                                                <ng-container *ngIf="key !== 'tipoppro' && key !== 'numppro'">{{d[key]}}</ng-container>
+                                                                            </td>
+                                                                        </ng-container>
+                                                                        <td>
+                                                                            <button *ngIf="esAbono(d)" class="btn-doc-afectados btn-abono" (click)="verInfoAbono(d)" title="Ver a qué documentos aplica este abono">
+                                                                                <i class="fas fa-link"></i> Ver recibos
+                                                                            </button>
+                                                                            <button *ngIf="esAnticipo(d)" class="btn-doc-afectados btn-anticipo" (click)="verInfoAbono(d)" title="Ver a qué documentos aplica este anticipo">
+                                                                                <i class="fas fa-link"></i> Ver recibos
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="detail-container" *ngIf="r.loading">
+                                                        <div class="text-center p-3">
+                                                            <div class="spinner-border text-success" role="status"></div>
+                                                            <span class="ms-2">Cargando detalle...</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="detail-container" *ngIf="r.error">
+                                                        <div class="text-center p-3 text-danger">
+                                                            <i class="fas fa-exclamation-triangle"></i> Error al cargar el detalle
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="text-center p-4" *ngIf="filteredRetenciones.length === 0">
+                                    <h4>No se encontraron retenciones</h4>
+                                </div>
+
+                                <div class="row mt-3" *ngIf="totalPages > 1">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <nav>
+                                            <ul class="pagination">
+                                                <li class="page-item" [class.disabled]="currentPage === 1">
+                                                    <a class="page-link" href="javascript:void(0)" (click)="prevPage()">Anterior</a>
+                                                </li>
+                                                <li class="page-item" *ngFor="let p of pages" [class.active]="p === currentPage">
+                                                    <a class="page-link" href="javascript:void(0)" (click)="goToPage(p)">{{p}}</a>
+                                                </li>
+                                                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                                                    <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Siguiente</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-footer></app-footer>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

@@ -432,7 +432,7 @@ nav[aria-label="Page navigation example"] {
 .upload-btn {
     width: 50% !important;
     height: 5vh !important;
-    background: #6cc32c !important;
+    background: vars.$text-color2 !important;
     border-radius: 1rem;
 }
 
@@ -453,7 +453,7 @@ nav[aria-label="Page navigation example"] {
 }
 
 th {
-    background: #6cc32c !important;
+    background: vars.$text-color2 !important;
     color: #FFF;
     text-align: center;
     font-weight: 900;

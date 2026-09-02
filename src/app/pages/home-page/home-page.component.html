@@ -8,61 +8,84 @@
     <mat-sidenav-content class="w-100">
       <div class="container-fluid container-max">
         <div class="row">
-          <div class="col-8 ">
+          <div class="col-4">
             <div class="box-col">
               <h1 class="text-center mb-5 mt-5">Bienvenido a nuestro Centro de Transferencia </h1>
               <img class="logo__lab mt-5" src="./../../../assets/images/logoprv/{{authService.getProveed()}}.png"
                 alt="">
             </div>
-
           </div>
 
-          <div class="col-4 ">
+          <div class="col-8">
             <div class="box-col">
-              <h1 class="text-center mt-5">Accesos</h1>
-              <ul class="nav flex-column menu__nav mt-5">
-                <li class="nav-item">
-                  <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/pedidos')">
-                    <i class="fas fa-cart-plus"></i><span> Catalogo</span>
+              <h1 class="text-center mt-4 mb-4">Panel de Accesos</h1>
+
+              <div class="panel-ventas panel-group" *ngIf="usuariopadre === 'MASTERPROV'">
+                <h2 class="panel-title"><i class="fas fa-shopping-cart"></i> Ventas</h2>
+                <div class="panel-grid">
+                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/pedidos')">
+                    <i class="fas fa-cart-plus"></i>
+                    <span>Catálogo</span>
                   </a>
-                </li>
-
-                  <li class="nav-item" >
-                      <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/cargar-pedidos')">
-                          <i class="fas fa-upload"></i><span *ngIf="isMenuOpen"> Cargar pedidos desde archivo </span>
-                      </a>
-                  </li>
-
-
-                  <li class="nav-item">
-                  <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/miperfil')">
-                    <i class="fas fa-user"></i><span> Perfil</span>
+                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/cargar-pedidos')">
+                    <i class="fas fa-upload"></i>
+                    <span>Cargar pedidos desde archivo</span>
                   </a>
-                </li>
+                </div>
+              </div>
 
-                <li class="nav-item">
-                  <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/historialped')">
-                    <i class="fas fa-circle-nodes"></i><span> Triangulaciones Efectuadas</span>
+              <div class="panel-ventas panel-group">
+                <h2 class="panel-title"><i class="fas fa-chart-line"></i> Reportes</h2>
+                <div class="panel-grid">
+                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/historialped')">
+                    <i class="fas fa-circle-nodes"></i>
+                    <span>Triangulaciones Efectuadas</span>
                   </a>
-                </li>
+                  <a class="panel-option" href="javascript:void(0)" (click)="bajareporteunico()">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Ventas del usuario</span>
+                  </a>
+                  <a class="panel-option" href="javascript:void(0)" (click)="bajareportemaster()" *ngIf="usuariopadre === 'MASTERPROV'">
+                    <i class="fas fa-users"></i>
+                    <span>Ventas totales</span>
+                  </a>
+                  <a class="panel-option" href="javascript:void(0)" (click)="bajareporteinv()">
+                    <i class="fas fa-boxes"></i>
+                    <span>Inventario</span>
+                  </a>
+                </div>
+              </div>
 
-               <li class="nav-item"  *ngIf="usuariopadre === 'MASTERPROV'" >
-                 <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin')">
-                   <i class="fas fa-circle-nodes"></i><span> Resumen de ventas</span>
-                 </a>
-               </li>
+              <div class="panel-admin panel-group" *ngIf="usuariopadre === 'MASTERPROV'">
+                <h2 class="panel-title"><i class="fas fa-cog"></i> Administrativo</h2>
+                <div class="panel-grid">
+                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/admin')">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Resumen de ventas</span>
+                  </a>
+                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/admin/retenciones')">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    <span>Facturas Abonadas</span>
+                  </a>
+                </div>
+              </div>
 
-               <!-- <li class="nav-item"  *ngIf="usuariopadre === 'MASTERPROV'" >
-                 <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin/pedidos')">
-                   <i class="fas fa-circle-nodes"></i><span> Detalle por vendedor </span>
-                 </a>
-               </li> -->
-              </ul>
+              <div class="panel-perfil panel-group">
+                <h2 class="panel-title"><i class="fas fa-user"></i> Mi cuenta</h2>
+                <div class="panel-grid">
+                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/miperfil')">
+                    <i class="fas fa-user-edit"></i>
+                    <span>Perfil</span>
+                  </a>
+                  <a class="panel-option panel-logout" href="javascript:void(0)" (click)="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Cerrar sesión</span>
+                  </a>
+                </div>
+              </div>
+
             </div>
-
-
           </div>
-
         </div>
       </div>
       <app-footer></app-footer>

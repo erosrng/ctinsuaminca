@@ -783,7 +783,7 @@
     /* display: flex;
     margin: auto; */
     font-size: 3rem;
-    color: #0176c6;
+    color: vars.$text-color2;
 }
 .logo__lab{
     width: 40rem;
@@ -798,7 +798,7 @@
 .box-col {
     text-align: center;
     padding: 2rem;
-    border: 1px solid #6bc32d;
+    border: 1px solid vars.$text-color2;
     border-radius: 1rem;
     height: 100%;
 }
@@ -810,8 +810,8 @@
 .nav-item {
     padding: 1rem;
     text-align: center;
-    background: #0284c5;
-    border: 1px solid #0284c5;
+    background: vars.$principal-color;
+    border: 1px solid vars.$principal-color;
     border-radius: 1rem;
     margin-bottom: 1rem;
     color: #FFF;
@@ -825,10 +825,83 @@
 .nav-item:hover {
     padding: 1rem;
     text-align: center;
-    background: #6bc32d;
-    border: 1px solid #6bc32d;
+    background: vars.$text-color2;
+    border: 1px solid vars.$text-color2;
     border-radius: 1rem;
     margin-bottom: 1rem;
     color: #FFF;
     text-align: left;
+}
+
+/**************** PANEL DE ACCESOS ****************/
+.panel-group {
+    background: #fff;
+    border: 1px solid vars.$text-color2;
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 16px rgba(15, 114, 67, 0.08);
+}
+
+.panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: vars.$text-color2;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid rgba(15, 114, 67, 0.2);
+
+    i {
+        font-size: 1.8rem;
+        color: vars.$principal-color;
+    }
+}
+
+.panel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.panel-option {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.2rem 1rem;
+    background: vars.$text-color2;
+    color: #FFF;
+    border-radius: 1rem;
+    text-decoration: none;
+    font-size: 1.3rem;
+    font-weight: 500;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(15, 114, 67, 0.2);
+
+    i {
+        font-size: 1.6rem;
+        color: vars.$resaltador;
+    }
+
+    &:hover {
+        transform: translateY(-3px);
+        background: vars.$text-color2-hover;
+        box-shadow: 0 6px 16px rgba(15, 114, 67, 0.3);
+    }
+}
+
+.panel-option.panel-logout {
+    background: vars.$principal-color;
+
+    &:hover {
+        background: vars.$principal-color-hover;
+    }
+}
+
+@media (max-width: 992px) {
+    .panel-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
 }

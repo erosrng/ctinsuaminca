@@ -1,3 +1,5 @@
+@use '../../../../styles/variables.scss' as vars;
+
 .container-max {
     padding: 2rem;
     margin-top: 5rem;
@@ -8,7 +10,7 @@
     font-size: 6vh;
     width: 6vh;
     height: 6vh;
-    color: #0084c5;
+    color: vars.$principal-color;
     margin-right: 1vh !important;
 }
 
@@ -21,13 +23,13 @@
     span {
         font-size: 2.5rem;
         margin-left: 10px;
-        color: #0084c5 !important;
+        color: vars.$principal-color !important;
     }
 }
 
 .card {
     margin-bottom: 1rem;
-    border: 1px solid #6cc32c;
+    border: 1px solid vars.$text-color2;
     border-radius: 10px;
     padding: 1rem;
 }

@@ -510,7 +510,6 @@ sortData(sortField: string) {
 
   agg_pedido(product: any, type: string) {
     Swal.showLoading();
-    //console.log(this.seclectElement)
     const cantidadInput = document.getElementById(`cana_${product.codigo}`) as HTMLInputElement;
     const cantidadInput2 = document.getElementById(`cana2_${product.codigo}`) as HTMLInputElement;
     let cantidad: number;
@@ -541,19 +540,25 @@ sortData(sortField: string) {
         return;
       }
     }
+
+    if (this.productosEnCarritoCodigos.includes(product.codigo)) {
+      Swal.close();
+      this.mostrarModalModificar(product);
+      return;
+    }
+
     localStorage.setItem('almacenn', this.almacen)
     this.portalcliLogicaService.agregarAlCarrito(product, cantidad, descprov, this.almacen).subscribe({
       next: (response: any) => {
         let mensaje = response.message;
         
-        // Convertir mensaje a string si es un objeto
         if (typeof mensaje === 'object') {
           mensaje = JSON.stringify(mensaje);
         }
     
         Swal.fire({
           text: mensaje,
-          icon: response.result ? 'success' : 'error', // 'success' si result=true, 'error' si result=false
+          icon: response.result ? 'success' : 'error',
           showConfirmButton: false,
           timer: 3000,
           toast: true,
@@ -572,6 +577,179 @@ sortData(sortField: string) {
           position: 'bottom-end',
         });
       }
+    });
+  }
+
+  private mostrarModalModificar(product: any) {
+    const codCli = this.authService.getCodCli();
+
+    Swal.showLoading();
+
+    this.portalcliLogicaService.obtenerItemCarrito(product.codigo, codCli ?? '', this.almacen).subscribe({
+      next: (item) => {
+        Swal.close();
+
+        if (!item) {
+          this.portalcliLogicaService.agregarAlCarrito(product, 1, 0, this.almacen).subscribe({
+            next: (response: any) => {
+              Swal.fire({
+                text: response.message || 'Pedido agregado exitosamente!',
+                icon: response.result ? 'success' : 'error',
+                showConfirmButton: false,
+                timer: 3000,
+                toast: true,
+                position: 'bottom-end',
+              });
+              this.revisarCarrito();
+            },
+          });
+          return;
+        }
+
+        const currentCant = parseInt(item.cant) || 0;
+        const idPedido = item.id_pedido;
+        const imgSrc = product.img || '';
+
+        Swal.fire({
+          title: `<strong>${product.descrip}</strong>`,
+          html: `
+            <div style="display: flex; align-items: center; gap: 15px; margin: 10px 0 15px; padding: 12px; background: #f8f9fa; border-radius: 10px;">
+              ${imgSrc ? `<img src="${imgSrc}" alt="${product.descrip}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 10px; border: 1px solid #dee2e6;" onerror="this.style.display='none'">` : ''}
+              <div style="text-align: left; flex: 1;">
+                <p style="margin: 0 0 4px; color: #6c757d; font-size: 0.85em;">Código: <strong>${product.codigo}</strong></p>
+                <p style="margin: 0; font-size: 0.95em; color: #495057;">En carrito: <span style="color: #0d6efd; font-weight: 700; font-size: 1.2em;">${currentCant}</span> uds.</p>
+              </div>
+            </div>
+            <div style="margin-bottom: 5px;">
+              <label for="nuevaCantidad" style="font-weight: 600; display: block; margin-bottom: 8px; text-align: left; color: #212529; font-size: 0.95em;">
+                Nueva cantidad:
+              </label>
+              <input id="nuevaCantidad" type="number" min="1" value="${currentCant}" style="text-align: center; font-size: 1.1em; font-weight: 600; width: 120px; margin: 0 auto; padding: 8px 12px; border: 2px solid #dee2e6; border-radius: 8px; outline: none; display: block;" onfocus="this.style.borderColor='#0d6efd'" onblur="this.style.borderColor='#dee2e6'">
+            </div>
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Actualizar cantidad',
+          cancelButtonText: 'Cancelar',
+          showDenyButton: true,
+          denyButtonText: 'Eliminar del carrito',
+          denyButtonColor: '#dc3545',
+          confirmButtonColor: '#0d6efd',
+          buttonsStyling: true,
+          reverseButtons: true,
+          preConfirm: () => {
+            const input = Swal.getPopup()?.querySelector('#nuevaCantidad') as HTMLInputElement;
+            const val = parseInt(input?.value);
+            if (!val || val <= 0) {
+              Swal.showValidationMessage('La cantidad debe ser mayor a cero');
+              return false;
+            }
+            return val;
+          },
+        }).then((result) => {
+          if (result.isConfirmed) {
+            const newCant = result.value as number;
+            Swal.showLoading();
+            this.portalcliLogicaService.actualizarCantidad(idPedido, product.codigo, newCant).subscribe({
+              next: (res: any) => {
+                Swal.close();
+                if (res.result) {
+                  Swal.fire({
+                    text: 'Cantidad actualizada exitosamente!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    toast: true,
+                    position: 'bottom-end',
+                  });
+                } else {
+                  Swal.fire({
+                    text: res.mensaje || 'Error al actualizar',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    toast: true,
+                    position: 'bottom-end',
+                  });
+                }
+                this.revisarCarrito();
+              },
+              error: () => {
+                Swal.close();
+                Swal.fire({
+                  text: 'Error al conectar con el servidor',
+                  icon: 'error',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  toast: true,
+                  position: 'bottom-end',
+                });
+              },
+            });
+          } else if (result.isDenied) {
+            Swal.fire({
+              title: '¿Estás seguro?',
+              html: `¿Eliminar <strong>"${product.descrip}"</strong> del carrito?`,
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, eliminar',
+              cancelButtonText: 'Cancelar',
+              confirmButtonColor: '#dc3545',
+              reverseButtons: true,
+            }).then((confirmResult) => {
+              if (confirmResult.isConfirmed) {
+                Swal.showLoading();
+                this.portalcliLogicaService.eliminarItemCarrito(idPedido, product.codigo).subscribe({
+                  next: (res: any) => {
+                    Swal.close();
+                    if (res.result) {
+                      Swal.fire({
+                        text: 'Producto eliminado del carrito',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        toast: true,
+                        position: 'bottom-end',
+                      });
+                    } else {
+                      Swal.fire({
+                        text: res.mensaje || 'Error al eliminar',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        toast: true,
+                        position: 'bottom-end',
+                      });
+                    }
+                    this.revisarCarrito();
+                  },
+                  error: () => {
+                    Swal.close();
+                    Swal.fire({
+                      text: 'Error al conectar con el servidor',
+                      icon: 'error',
+                      showConfirmButton: false,
+                      timer: 3000,
+                      toast: true,
+                      position: 'bottom-end',
+                    });
+                  },
+                });
+              }
+            });
+          }
+        });
+      },
+      error: () => {
+        Swal.close();
+        Swal.fire({
+          text: 'Error al obtener información del carrito',
+          icon: 'error',
+          showConfirmButton: false,
+          timer: 3000,
+          toast: true,
+          position: 'bottom-end',
+        });
+      },
     });
   }
 
