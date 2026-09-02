@@ -70,10 +70,13 @@
                                                     </span>
                                                 </td>
                                                 <td (click)="$event.stopPropagation()">
-                                                    <button *ngIf="r.idriva" class="btn btn-sm btn-success" (click)="imprimir(r.idriva)" title="Imprimir retención">
+                                                    <button *ngIf="r.idriva" class="btn btn-sm btn-success" (click)="imprimir(r.idriva)" title="Imprimir retención IVA">
                                                         <i class="fas fa-print"></i>
                                                     </button>
-                                                    <button *ngIf="!r.idriva" class="btn btn-sm btn-secondary" disabled title="Sin retención para imprimir">
+                                                    <button *ngIf="r.reten > 0 && (r.idgser || r.idscst)" class="btn btn-sm btn-warning" (click)="imprimirIslr(r)" title="Imprimir retención ISLR">
+                                                        <i class="fas fa-file-invoice-dollar"></i>
+                                                    </button>
+                                                    <button *ngIf="!r.idriva && !(r.reten > 0 && (r.idgser || r.idscst))" class="btn btn-sm btn-secondary" disabled title="Sin retención para imprimir">
                                                         <i class="fas fa-print"></i>
                                                     </button>
                                                 </td>

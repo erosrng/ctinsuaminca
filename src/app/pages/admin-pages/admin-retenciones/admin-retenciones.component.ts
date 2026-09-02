@@ -38,6 +38,8 @@ interface Retencion {
   idriva: number;
   nrocomp: string;
   numeroriva: string;
+  idgser: number;
+  idscst: number;
 }
 
 interface DetalleRetencion {
@@ -166,6 +168,13 @@ export class AdminRetencionesComponent implements OnInit {
 
   imprimir(id: number) {
     const url = `${PROTEO_URL_ALONEINTER}formatos/ver/RIVA/${id}/S`;
+    window.open(url, '_blank', 'width=800,height=600,scrollbars=yes,status=yes,resizable=yes');
+  }
+
+  imprimirIslr(r: FilaRetencion) {
+    const formato = r.idgser ? 'GSERRT' : 'SCSTRT';
+    const id = r.idgser || r.idscst;
+    const url = `${PROTEO_URL_ALONEINTER}formatos/ver/${formato}/${id}/S`;
     window.open(url, '_blank', 'width=800,height=600,scrollbars=yes,status=yes,resizable=yes');
   }
 
