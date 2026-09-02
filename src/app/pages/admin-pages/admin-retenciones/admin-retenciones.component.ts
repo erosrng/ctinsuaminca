@@ -78,8 +78,8 @@ export class AdminRetencionesComponent implements OnInit {
   filteredRetenciones: FilaRetencion[] = [];
   searchText: string = '';
 
-  selectedMes: number = new Date().getMonth() + 1;
-  selectedAnio: number = new Date().getFullYear();
+  selectedMes: number = 0;
+  selectedAnio: number = 0;
   aniosDisponibles: number[] = [];
   meses: { valor: number; nombre: string }[] = [
     { valor: 1, nombre: 'Enero' },
@@ -124,8 +124,14 @@ export class AdminRetencionesComponent implements OnInit {
     const formData = new FormData();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
     formData.append('proveed', proveed ?? '');
-    formData.append('mes', this.selectedMes.toString());
-    formData.append('anio', this.selectedAnio.toString());
+
+    let mes = this.selectedMes;
+    let anio = this.selectedAnio;
+    if (mes > 0 && anio === 0) {
+      anio = new Date().getFullYear();
+    }
+    formData.append('mes', mes.toString());
+    formData.append('anio', anio.toString());
 
     this.http.post(`${API_URLINTER}retenciones`, formData, { headers })
       .subscribe({

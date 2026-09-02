@@ -16,11 +16,13 @@
                                 <div class="row mb-3 align-items-center">
                                     <div class="col-2">
                                         <select class="form-select filter-select" [(ngModel)]="selectedMes" (change)="cambiarFiltro()">
+                                            <option [value]="0">Todos los meses</option>
                                             <option *ngFor="let m of meses" [value]="m.valor">{{m.nombre}}</option>
                                         </select>
                                     </div>
                                     <div class="col-2">
                                         <select class="form-select filter-select" [(ngModel)]="selectedAnio" (change)="cambiarFiltro()">
+                                            <option [value]="0">Todos los años</option>
                                             <option *ngFor="let a of aniosDisponibles" [value]="a">{{a}}</option>
                                         </select>
                                     </div>
