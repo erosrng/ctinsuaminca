@@ -26,6 +26,22 @@
     font-size: 1.4rem;
 }
 
+.filter-select {
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1.4rem;
+    background-color: #fff;
+    color: vars.$menu-color;
+    cursor: pointer;
+
+    &:focus {
+        border-color: vars.$text-color2;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(15, 114, 67, 0.15);
+    }
+}
+
 .total-registros {
     font-size: 1.4rem;
     font-weight: 500;

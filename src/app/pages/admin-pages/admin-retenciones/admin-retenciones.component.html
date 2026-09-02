@@ -14,10 +14,20 @@
                             </div>
                             <div class="card-body">
                                 <div class="row mb-3 align-items-center">
+                                    <div class="col-2">
+                                        <select class="form-select filter-select" [(ngModel)]="selectedMes" (change)="cambiarFiltro()">
+                                            <option *ngFor="let m of meses" [value]="m.valor">{{m.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-2">
+                                        <select class="form-select filter-select" [(ngModel)]="selectedAnio" (change)="cambiarFiltro()">
+                                            <option *ngFor="let a of aniosDisponibles" [value]="a">{{a}}</option>
+                                        </select>
+                                    </div>
                                     <div class="col-4">
                                         <input type="text" class="form-control search-input" placeholder="Buscar por tipo, nro, proveedor, RIF, banco, retención..." [(ngModel)]="searchText" (input)="applyFilter()">
                                     </div>
-                                    <div class="col-8 text-end">
+                                    <div class="col-4 text-end">
                                         <span class="total-registros">Total registros: {{filteredRetenciones.length}}</span>
                                     </div>
                                 </div>

@@ -78,6 +78,24 @@ export class AdminRetencionesComponent implements OnInit {
   filteredRetenciones: FilaRetencion[] = [];
   searchText: string = '';
 
+  selectedMes: number = new Date().getMonth() + 1;
+  selectedAnio: number = new Date().getFullYear();
+  aniosDisponibles: number[] = [];
+  meses: { valor: number; nombre: string }[] = [
+    { valor: 1, nombre: 'Enero' },
+    { valor: 2, nombre: 'Febrero' },
+    { valor: 3, nombre: 'Marzo' },
+    { valor: 4, nombre: 'Abril' },
+    { valor: 5, nombre: 'Mayo' },
+    { valor: 6, nombre: 'Junio' },
+    { valor: 7, nombre: 'Julio' },
+    { valor: 8, nombre: 'Agosto' },
+    { valor: 9, nombre: 'Septiembre' },
+    { valor: 10, nombre: 'Octubre' },
+    { valor: 11, nombre: 'Noviembre' },
+    { valor: 12, nombre: 'Diciembre' }
+  ];
+
   currentPage: number = 1;
   pageSize: number = 15;
   totalPages: number = 0;
@@ -88,6 +106,14 @@ export class AdminRetencionesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    const anioActual = new Date().getFullYear();
+    for (let a = anioActual; a >= anioActual - 5; a--) {
+      this.aniosDisponibles.push(a);
+    }
+    this.cargarRetenciones();
+  }
+
+  cambiarFiltro() {
     this.cargarRetenciones();
   }
 
@@ -98,6 +124,8 @@ export class AdminRetencionesComponent implements OnInit {
     const formData = new FormData();
     const headers = new HttpHeaders({ 'Authorization': `${token}` });
     formData.append('proveed', proveed ?? '');
+    formData.append('mes', this.selectedMes.toString());
+    formData.append('anio', this.selectedAnio.toString());
 
     this.http.post(`${API_URLINTER}retenciones`, formData, { headers })
       .subscribe({
