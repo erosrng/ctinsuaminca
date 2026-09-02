@@ -22,7 +22,6 @@
                                     </div>
                                     <div class="col-2">
                                         <select class="form-select filter-select" [(ngModel)]="selectedAnio" (change)="cambiarFiltro()">
-                                            <option [value]="0">Todos los años</option>
                                             <option *ngFor="let a of aniosDisponibles" [value]="a">{{a}}</option>
                                         </select>
                                     </div>
@@ -159,7 +158,8 @@
                                 </div>
 
                                 <div class="text-center p-4" *ngIf="filteredRetenciones.length === 0">
-                                    <h4>No se encontraron retenciones</h4>
+                                    <h4 *ngIf="selectedMes === 0">Seleccione un mes y año para ver sus facturas abonadas</h4>
+                                    <h4 *ngIf="selectedMes > 0">No se encontraron retenciones</h4>
                                 </div>
 
                                 <div class="row mt-3" *ngIf="totalPages > 1">
