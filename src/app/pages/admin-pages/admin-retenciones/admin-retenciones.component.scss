@@ -42,6 +42,19 @@
     }
 }
 
+.btn-search {
+    background: vars.$text-color2;
+    color: #FFF;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0 1.5rem;
+    font-size: 1.5rem;
+
+    &:hover {
+        background: vars.$text-color2-hover;
+    }
+}
+
 .total-registros {
     font-size: 1.4rem;
     font-weight: 500;

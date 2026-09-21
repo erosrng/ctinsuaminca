@@ -113,13 +113,19 @@ export class AdminRetencionesComponent implements OnInit {
   }
 
   cambiarFiltro() {
-    if (this.selectedMes > 0) {
+    const tieneMes = this.selectedMes > 0;
+    const tieneBusqueda = this.searchText.trim().length > 0;
+    if (tieneMes || tieneBusqueda) {
       this.cargarRetenciones();
     } else {
       this.retenciones = [];
       this.filteredRetenciones = [];
       this.totalPages = 0;
     }
+  }
+
+  onBuscar() {
+    this.cambiarFiltro();
   }
 
   cargarRetenciones() {
@@ -131,6 +137,7 @@ export class AdminRetencionesComponent implements OnInit {
     formData.append('proveed', proveed ?? '');
     formData.append('mes', this.selectedMes.toString());
     formData.append('anio', this.selectedAnio.toString());
+    formData.append('buscador', this.searchText.trim());
 
     this.http.post(`${API_URLINTER}retenciones`, formData, { headers })
       .subscribe({
@@ -154,18 +161,7 @@ export class AdminRetencionesComponent implements OnInit {
   }
 
   applyFilter() {
-    const search = this.searchText.toLowerCase().trim();
-    if (!search) {
-      this.filteredRetenciones = [...this.retenciones];
-    } else {
-      this.filteredRetenciones = this.retenciones.filter(r => {
-        const valores = [
-          r.numero, r.tipo_doc, r.rif, r.fecha, r.transac,
-          r.nrocomp, r.numeroriva, String(r.reten), String(r.monto), String(r.montod)
-        ];
-        return valores.some(v => v !== null && v !== undefined && v.toString().toLowerCase().includes(search));
-      });
-    }
+    this.filteredRetenciones = [...this.retenciones];
     this.currentPage = 1;
     this.totalPages = Math.ceil(this.filteredRetenciones.length / this.pageSize);
   }
