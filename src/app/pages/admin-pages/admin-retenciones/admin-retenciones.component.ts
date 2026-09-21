@@ -158,15 +158,13 @@ export class AdminRetencionesComponent implements OnInit {
     if (!search) {
       this.filteredRetenciones = [...this.retenciones];
     } else {
-      this.filteredRetenciones = this.retenciones.filter(r =>
-        r.numero.toLowerCase().includes(search) ||
-        r.tipo_doc.toLowerCase().includes(search) ||
-        r.nombre.toLowerCase().includes(search) ||
-        r.rif.toLowerCase().includes(search) ||
-        r.banco.toLowerCase().includes(search) ||
-        r.reten.toString().includes(search) ||
-        r.transac.toLowerCase().includes(search)
-      );
+      this.filteredRetenciones = this.retenciones.filter(r => {
+        const valores = [
+          r.numero, r.tipo_doc, r.rif, r.fecha, r.transac,
+          r.nrocomp, r.numeroriva, String(r.reten), String(r.monto), String(r.montod)
+        ];
+        return valores.some(v => v !== null && v !== undefined && v.toString().toLowerCase().includes(search));
+      });
     }
     this.currentPage = 1;
     this.totalPages = Math.ceil(this.filteredRetenciones.length / this.pageSize);
