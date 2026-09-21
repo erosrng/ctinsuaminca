@@ -197,7 +197,7 @@ tr.has-retention {
 }
 
 .badge-anticipo {
-    background: vars.$resaltador;
+    background: vars.$principal-color-hover;
     color: vars.$principal-color;
     font-size: 1.2rem;
     padding: 0.4rem 0.8rem;
@@ -240,7 +240,7 @@ tr.has-retention {
 }
 
 .tag-anticipo {
-    background: vars.$resaltador;
+    background: vars.$principal-color-hover;
     color: #FFF;
 }
 
@@ -300,7 +300,7 @@ tr.has-retention {
 }
 
 .btn-anticipo {
-    background: vars.$resaltador;
+    background: vars.$principal-color-hover;
     color: #FFF;
 
     &:hover {
