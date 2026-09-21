@@ -44,9 +44,11 @@
                                                 <th>Tipo</th>
                                                 <th>Nro</th>
                                                 <th>Fecha</th>
-                                                <th>Retención</th>
                                                 <th>Monto</th>
                                                 <th>Abonos</th>
+                                                <th>Saldo</th>
+                                                <th>Saldo $</th>
+                                                <th>Dcto</th>
                                                 <th>RIF</th>
                                                 <th>Tasa</th>
                                                 <th>Monto $</th>
@@ -64,9 +66,11 @@
                                                 <td><span class="badge" [ngClass]="{'bg-primary': r.tipo_doc === 'FC', 'bg-warning': r.tipo_doc === 'NC', 'bg-danger': r.tipo_doc === 'ND'}">{{r.tipo_doc}}</span></td>
                                                 <td>{{r.numero}}</td>
                                                 <td>{{r.fecha}}</td>
-                                                <td class="text-end">{{r.reten | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.monto | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.abonos | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.saldo | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.saldod | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.despp}}</td>
                                                 <td>{{r.rif}}</td>
                                                 <td class="text-end">{{r.tasadolar | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.montod | number:'1.2-2'}}</td>
@@ -92,7 +96,7 @@
                                                 </td>
                                             </tr>
                                             <tr *ngIf="r.expanded" class="detail-row">
-                                                <td colspan="12">
+                                                <td colspan="15">
                                                     <div class="detail-container" *ngIf="!r.loading && !r.error">
                                                         <div class="detail-header">
                                                             <strong>Detalle del documento {{r.tipo_doc}} {{r.numero}}</strong>

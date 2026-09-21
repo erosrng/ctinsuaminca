@@ -40,6 +40,9 @@ interface Retencion {
   numeroriva: string;
   idgser: number;
   idscst: number;
+  saldo: number;
+  saldod: number;
+  despp: string;
 }
 
 interface DetalleRetencion {
