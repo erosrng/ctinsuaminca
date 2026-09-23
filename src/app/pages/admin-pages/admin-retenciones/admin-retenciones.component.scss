@@ -308,6 +308,15 @@ tr.has-retention {
     }
 }
 
+.btn-retencion {
+    background: vars.$text-color2;
+    color: #FFF;
+
+    &:hover {
+        background: vars.$text-color2-hover;
+    }
+}
+
 .leyendas {
     display: flex;
     flex-direction: column;
@@ -392,5 +401,13 @@ tr.has-retention {
         vertical-align: middle;
         border: 1px solid #e0e0e0;
         white-space: nowrap;
+    }
+
+    tbody tr {
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: rgba(15, 114, 67, 0.08) !important;
+        }
     }
 }

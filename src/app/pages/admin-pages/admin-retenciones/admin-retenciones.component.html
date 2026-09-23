@@ -48,8 +48,7 @@
                                                 <th>Abonos</th>
                                                 <th>Saldo</th>
                                                 <th>Saldo $</th>
-                                                <th>Dcto</th>
-                                                <th>RIF</th>
+                                                <th>Dcto PP</th>
                                                 <th>Tasa</th>
                                                 <th>Monto $</th>
                                                 <th>Comp. Retención</th>
@@ -71,7 +70,6 @@
                                                 <td class="text-end">{{r.saldo | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.saldod | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.despp}}</td>
-                                                <td>{{r.rif}}</td>
                                                 <td class="text-end">{{r.tasadolar | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.montod | number:'1.2-2'}}</td>
                                                 <td>
@@ -96,7 +94,7 @@
                                                 </td>
                                             </tr>
                                             <tr *ngIf="r.expanded" class="detail-row">
-                                                <td colspan="15">
+                                                <td colspan="14">
                                                     <div class="detail-container" *ngIf="!r.loading && !r.error">
                                                         <div class="detail-header">
                                                             <strong>Detalle del documento {{r.tipo_doc}} {{r.numero}}</strong>
@@ -135,6 +133,9 @@
                                                                             </button>
                                                                             <button *ngIf="esAnticipo(d)" class="btn-doc-afectados btn-anticipo" (click)="verInfoAbono(d)" title="Ver a qué documentos aplica este anticipo">
                                                                                 <i class="fas fa-link"></i> Ver recibos
+                                                                            </button>
+                                                                            <button *ngIf="d.rtnc" class="btn-doc-afectados btn-retencion" (click)="verRetencion(d)" title="Ver retención de esta NC">
+                                                                                <i class="fas fa-file-invoice"></i> Ver retención
                                                                             </button>
                                                                         </td>
                                                                     </tr>

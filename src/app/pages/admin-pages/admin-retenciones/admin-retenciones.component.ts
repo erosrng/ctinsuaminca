@@ -50,6 +50,7 @@ interface DetalleRetencion {
   fecha: string;
   monto: number;
   idsprm: number;
+  rtnc: number;
   [key: string]: any;
 }
 
@@ -248,6 +249,11 @@ verInfoAbono(d: DetalleRetencion) {
     window.open(url, '_blank', 'width=800,height=600,scrollbars=yes,status=yes,resizable=yes');
   }
 
+  verRetencion(d: DetalleRetencion) {
+    const url = `${PROTEO_URL_ALONEINTER}formatos/ver/RIVA/${d.rtnc}/S`;
+    window.open(url, '_blank', 'width=800,height=600,scrollbars=yes,status=yes,resizable=yes');
+  }
+
   esAbono(d: DetalleRetencion): boolean {
     return d && d.tipoppro === 'AB';
   }
@@ -258,7 +264,7 @@ verInfoAbono(d: DetalleRetencion) {
 
 objectKeys(obj: any): string[] {
     if (!obj) return [];
-    const excluidos = ['tipo_doc', 'numero', 'mora', 'transac', 'estampa', 'hora', 'usuario', 'preten', 'creten', 'breten', 'reteiva', 'id', 'modificado', 'montod', 'abonod', 'cambiod', 'riva', 'pdescp', 'montpp', 'pdescpa', 'idsprm', 'cod_prv'];
+    const excluidos = ['tipo_doc', 'numero', 'mora', 'transac', 'estampa', 'hora', 'usuario', 'preten', 'creten', 'breten', 'reteiva', 'id', 'modificado', 'montod', 'abonod', 'cambiod', 'riva', 'pdescp', 'montpp', 'pdescpa', 'idsprm', 'cod_prv', 'rtnc'];
     return Object.keys(obj).filter(key => !excluidos.includes(key));
   }
 
