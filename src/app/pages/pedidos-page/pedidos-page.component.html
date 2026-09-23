@@ -257,17 +257,20 @@
                           <ng-container [ngSwitch]="clienteData?.ubica">
                               <!-- Para 0001: existenmat + existengua -->
                               <ng-container *ngSwitchCase="'0001'">
-                                  <strong>{{ (element.existenmat || 0) + (element.existengua || 0) }}</strong>
+                                  <!-- <strong>{{ (element.existenmat || 0) + (element.existengua || 0) }}</strong> -->
+                                   <strong>{{ (element.existenmat || 0) }}</strong>
                               </ng-container>
                               
                               <!-- Para 0002: existengua + existenmat + existenbqto -->
                               <ng-container *ngSwitchCase="'0002'">
-                                  <strong>{{ (element.existengua || 0) + (element.existenmat || 0) + (element.existenbqto || 0) }}</strong>
+                                  <!-- <strong>{{ (element.existengua || 0) + (element.existenmat || 0) + (element.existenbqto || 0) }}</strong> -->
+                                   <strong>{{ (element.existengua || 0)}}</strong>
                               </ng-container>
                               
                               <!-- Para 0010: existengua + existenbqto -->
                               <ng-container *ngSwitchCase="'0010'">
-                                  <strong>{{ (element.existengua || 0) + (element.existenbqto || 0) }}</strong>
+                                  <!-- <strong>{{ (element.existengua || 0) + (element.existenbqto || 0) }}</strong> -->
+                                   <strong>{{ (element.existenbqto || 0) }}</strong>
                               </ng-container>
                               
                               <!-- Caso por defecto: suma de todos -->
