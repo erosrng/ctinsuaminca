@@ -22,12 +22,19 @@ export const API_URL2 = 'https://insuaminca.org/insuaminca/api/ptprv/';
 export const PROTEO_URL = 'https://insuaminca.org/insuaminca/api/ptprv/';
 export const API_FAST ='http://3.143.124.47:5000';
 
-// ACCESO FTP EXTER
+// ACCESO FTP EXTERNO
 export const PROTEO_URL_ALONEINTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/';
 export const API_URLINTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/post/';
 export const API_URL2INTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/';
 export const PROTEO_URLINTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/';
-export const API_FASTINTER ='http://3.143.124.47:5000';
+
+//Reportes
+export const PROTEO_URL_ALONEREPO = 'https://insuaminca.org/enlinea/';
+export const API_URLREPO = 'https://insuaminca.org/enlinea/api/ptprv/post/';
+export const API_URL2REPO = 'https://insuaminca.org/enlinea/api/ptprv/';
+export const PROTEO_URLREPO = 'https://insuaminca.org/enlinea/api/ptprv/';
+
+
 
 //ACCESO TODO DESDE EL FTP
 /* export const PROTEO_URL_ALONE = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/';

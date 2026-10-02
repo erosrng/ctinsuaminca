@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AuthService } from './../../auth.service';
 import { PortalcliLogicaService } from './../../services/portalcli-logica.service';
 import { Router } from '@angular/router';
-import { PROTEO_URL_ALONE } from './../../app.config';
+import { PROTEO_URL_ALONE, PROTEO_URL_ALONEREPO } from './../../app.config';
 import { PROTEO_URL_ALONEINTER } from './../../app.config';
 
 @Component({
@@ -84,7 +84,7 @@ export class SideBarComponent {
 
   bajareportemaster(){
     const proveed = this.authService.getProveed();
-    const url = `${PROTEO_URL_ALONEINTER}reportes/ver/VTASCENTRA/${proveed}`;
+    const url = `${PROTEO_URL_ALONEREPO}reportes/ver/VTASCENTRA/${proveed}`;
     window.open(url, '_blank', 'width=800,height=600,scrollbars=yes,status=yes,resizable=yes,screenx=((screen.availWidth/2)-400),screeny=((screen.availHeight/2)-300)');
   }
 
