@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { AuthService } from './../../auth.service';
+import { AccessRole, AuthService } from './../../auth.service';
+import { ACCESS_PERMISSIONS } from './../../access.config';
 import { PortalcliLogicaService } from './../../services/portalcli-logica.service';
 import { Router } from '@angular/router';
 import { PROTEO_URL_ALONE, PROTEO_URL_ALONEREPO } from './../../app.config';
@@ -19,7 +20,12 @@ export class SideBarComponent {
   showPedidosDropdown: boolean = false;
   showReportesDropdown: boolean = false;
   transitionClass: string = 'menu__transition'; 
-  usuariopadre: string | null = null; 
+  accessRole: AccessRole = 'VENDEDOR';
+  canSeeVentas: boolean = false;
+  canSeeReportes: boolean = false;
+  canSeeAdmin: boolean = false;
+  canSeeAdminSummary: boolean = false;
+  canSeeMasterReport: boolean = false;
   constructor(
     public authService: AuthService, 
     public portalcliLogicaService: PortalcliLogicaService,
@@ -27,12 +33,19 @@ export class SideBarComponent {
   ) {} 
 
   ngOnInit() {
-    this.usuariopadre = this.authService.getUsuarioPadre(); 
     const token = this.authService.getToken();
 
     this.portalcliLogicaService.isMenuOpen$. subscribe((isOpen: boolean) => {
       this.isMenuOpen = isOpen;
     });
+
+    this.accessRole = this.authService.getAccessRole();
+    const permissions = ACCESS_PERMISSIONS[this.accessRole];
+    this.canSeeVentas = permissions.ventas;
+    this.canSeeReportes = permissions.reportes;
+    this.canSeeAdmin = permissions.admin;
+    this.canSeeAdminSummary = permissions.adminSummary;
+    this.canSeeMasterReport = permissions.masterReport;
   }
 
   navigateTo(route: string) {

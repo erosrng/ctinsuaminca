@@ -786,7 +786,13 @@
     color: vars.$text-color2;
 }
 .logo__lab{
-    width: 40rem;
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 22rem;
+    object-fit: contain;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .container-max {
@@ -798,8 +804,8 @@
 .box-col {
     text-align: center;
     padding: 2rem;
-    border: 1px solid vars.$text-color2;
-    border-radius: 1rem;
+    border: 1px solid rgba(vars.$text-color2, 0.16);
+    border-radius: 2rem;
     height: 100%;
 }
 
@@ -834,74 +840,342 @@
 }
 
 /**************** PANEL DE ACCESOS ****************/
-.panel-group {
-    background: #fff;
-    border: 1px solid vars.$text-color2;
+.panel-box {
+    --role-accent: #{vars.$text-color2};
+    --role-soft: #{rgba(vars.$text-color2, 0.1)};
+    --role-ink: #{vars.$text-color2};
+    --role-on-accent: #{vars.$background-fondo};
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    padding: 2.6rem;
+    border: 1px solid rgba(vars.$text-color2, 0.16);
+    border-radius: 2rem;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(vars.$principal-color, 0.08), transparent 42%),
+        radial-gradient(circle at 0% 100%, rgba(vars.$text-color2, 0.06), transparent 42%),
+        vars.$background-fondo;
+    box-shadow: 0 18px 45px rgba(vars.$text-color2, 0.08);
+}
+
+.panel-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.4rem;
+    background: linear-gradient(90deg, var(--role-accent), var(--role-soft));
+}
+
+.panel-box--superprov {
+    --role-accent: #{vars.$principal-color};
+    --role-soft: #{rgba(vars.$principal-color, 0.14)};
+    --role-ink: #{vars.$principal-color-hover};
+}
+
+.panel-box--adminprov {
+    --role-accent: #{vars.$menu-color};
+    --role-soft: #{rgba(vars.$menu-color, 0.1)};
+    --role-ink: #{vars.$menu-color};
+}
+
+.panel-box--ventas {
+    --role-accent: #{vars.$menu-color-seconday};
+    --role-soft: #{rgba(vars.$menu-color-seconday, 0.2)};
+    --role-ink: #{vars.$menu-color};
+    --role-on-accent: #{vars.$menu-color};
+}
+
+.panel-box--vendedor {
+    --role-accent: #{vars.$text-claro};
+    --role-soft: #{rgba(vars.$text-claro, 0.14)};
+    --role-ink: #{vars.$menu-color};
+}
+
+.panel-accesos {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+}
+
+.panel-accesos__header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(vars.$text-color2, 0.12);
+}
+
+.panel-accesos__badge {
+    width: 5rem;
+    height: 5rem;
+    flex: 0 0 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.5rem;
+    background: var(--role-accent);
+    color: var(--role-on-accent);
+    font-size: 2rem;
+    box-shadow: 0 0 0 0.45rem var(--role-soft);
+}
+
+.panel-accesos__heading {
+    min-width: 0;
+}
+
+.panel-accesos__title {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: vars.$menu-color;
+    text-align: left;
+}
+
+.panel-accesos__subtitle {
+    margin: 0.3rem 0 0;
+    font-size: 1.2rem;
+    color: rgba(vars.$menu-color, 0.68);
+}
+
+.panel-accesos__profile {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--role-accent);
     border-radius: 1.2rem;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 16px rgba(15, 114, 67, 0.08);
+    background: var(--role-soft);
+    color: var(--role-ink);
 }
 
-.panel-title {
+.panel-accesos__profile-icon {
+    width: 3rem;
+    height: 3rem;
+    flex: 0 0 3rem;
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    font-size: 1.7rem;
-    font-weight: 600;
-    color: vars.$text-color2;
-    margin-bottom: 1rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 2px solid rgba(15, 114, 67, 0.2);
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--role-accent);
+    color: var(--role-on-accent);
+    font-size: 1.25rem;
+}
+
+.panel-accesos__profile-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.panel-accesos__profile-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.panel-accesos__profile-desc {
+    font-size: 0.95rem;
+    color: var(--role-ink);
+    opacity: 0.8;
+}
+
+.panel-accesos__groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+.access-group {
+    --access-accent: #{vars.$text-color2};
+    --access-accent-soft: #{rgba(vars.$text-color2, 0.1)};
+    --access-accent-border: #{rgba(vars.$text-color2, 0.24)};
+    --access-accent-shadow: #{rgba(vars.$text-color2, 0.16)};
+    padding: 1.3rem;
+    border: 1px solid rgba(vars.$text-color2, 0.08);
+    border-radius: 1.6rem;
+    background: rgba(vars.$text-color2, 0.035);
+}
+
+.access-group--reportes {
+    --access-accent: #{vars.$principal-color-hover};
+    --access-accent-soft: #{rgba(vars.$principal-color, 0.12)};
+    --access-accent-border: #{rgba(vars.$principal-color, 0.3)};
+    --access-accent-shadow: #{rgba(vars.$principal-color, 0.16)};
+}
+
+.access-group--admin {
+    --access-accent: #{vars.$menu-color};
+    --access-accent-soft: #{rgba(vars.$menu-color, 0.1)};
+    --access-accent-border: #{rgba(vars.$menu-color, 0.24)};
+    --access-accent-shadow: #{rgba(vars.$menu-color, 0.16)};
+}
+
+.access-group--cuenta {
+    --access-accent: #{vars.$text-color};
+    --access-accent-soft: #{rgba(vars.$text-color, 0.06)};
+    --access-accent-border: #{rgba(vars.$text-color, 0.2)};
+    --access-accent-shadow: #{rgba(vars.$text-color, 0.12)};
+}
+
+.access-group__title {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin: 0 0 1rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--access-accent);
 
     i {
-        font-size: 1.8rem;
-        color: vars.$principal-color;
+        font-size: 1.25rem;
     }
 }
 
-.panel-grid {
+.access-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
 }
 
-.panel-option {
+.access-grid > .access-card:only-child {
+    grid-column: 1 / -1;
+}
+
+.access-card {
     display: flex;
     align-items: center;
-    gap: 0.8rem;
-    padding: 1.2rem 1rem;
-    background: vars.$text-color2;
-    color: #FFF;
-    border-radius: 1rem;
+    gap: 1rem;
+    padding: 0.95rem 1.1rem;
+    border: 1px solid rgba(vars.$text-color2, 0.12);
+    border-radius: 1.3rem;
+    background: vars.$background-fondo;
     text-decoration: none;
-    font-size: 1.3rem;
-    font-weight: 500;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 8px rgba(15, 114, 67, 0.2);
-
-    i {
-        font-size: 1.6rem;
-        color: vars.$resaltador;
-    }
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background-color 0.22s ease;
 
     &:hover {
-        transform: translateY(-3px);
-        background: vars.$text-color2-hover;
-        box-shadow: 0 6px 16px rgba(15, 114, 67, 0.3);
+        transform: translateY(-0.3rem);
+        border-color: var(--access-accent);
+        background: var(--access-accent-soft);
+        box-shadow: 0 1rem 2.2rem var(--access-accent-shadow);
+    }
+
+    &:focus-visible {
+        outline: 3px solid var(--access-accent-border);
+        outline-offset: 2px;
     }
 }
 
-.panel-option.panel-logout {
-    background: vars.$principal-color;
+.access-card__icon {
+    width: 3.8rem;
+    height: 3.8rem;
+    flex: 0 0 3.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1.1rem;
+    background: var(--access-accent-soft);
+    color: var(--access-accent);
+    font-size: 1.45rem;
+    transition: background-color 0.22s ease, color 0.22s ease;
+}
 
-    &:hover {
-        background: vars.$principal-color-hover;
-    }
+.access-card:hover .access-card__icon {
+    background: var(--access-accent);
+    color: vars.$background-fondo;
+}
+
+.access-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.access-card__name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: vars.$menu-color;
+    line-height: 1.2;
+}
+
+.access-card__desc {
+    font-size: 1rem;
+    color: rgba(vars.$menu-color, 0.68);
+    line-height: 1.3;
+}
+
+.access-card__arrow {
+    margin-left: auto;
+    padding-left: 0.5rem;
+    font-size: 1.15rem;
+    color: var(--access-accent);
+    opacity: 0.55;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+}
+
+.access-card:hover .access-card__arrow {
+    opacity: 1;
+    transform: translateX(0.3rem);
+}
+
+.access-card--logout {
+    --access-accent: #{vars.$principal-color};
+    --access-accent-soft: #{rgba(vars.$principal-color, 0.12)};
+    --access-accent-border: #{rgba(vars.$principal-color, 0.32)};
+    --access-accent-shadow: #{rgba(vars.$principal-color, 0.18)};
+
+    border-color: rgba(vars.$principal-color, 0.3);
 }
 
 @media (max-width: 992px) {
-    .panel-grid {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    .panel-box {
+        padding: 2rem;
+    }
+
+    .panel-accesos__title {
+        font-size: 2.3rem;
+    }
+
+    .panel-accesos__profile {
+        padding: 0.5rem 0.85rem;
+    }
+
+    .panel-accesos__profile-desc {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .access-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .panel-box {
+        padding: 1.6rem;
+    }
+
+    .panel-accesos__badge {
+        width: 4.6rem;
+        height: 4.6rem;
+        flex: 0 0 4.6rem;
+        font-size: 1.8rem;
+    }
+
+    .panel-accesos__title {
+        font-size: 2rem;
+    }
+
+    .access-group {
+        padding: 1.2rem;
     }
 }

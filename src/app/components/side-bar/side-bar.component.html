@@ -8,13 +8,13 @@
           </a>
         </li>
   
-        <li class="nav-item" >
+        <li class="nav-item" *ngIf="canSeeVentas">
           <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/pedidos')">
             <i class="fas fa-cart-plus"></i><span *ngIf="isMenuOpen"> Catalogo</span>
           </a>
         </li>
 
-          <li class="nav-item" >
+          <li class="nav-item" *ngIf="canSeeVentas">
               <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/cargar-pedidos')">
                   <i class="fas fa-upload"></i><span *ngIf="isMenuOpen"> Cargar pedidos desde archivo </span>
               </a>
@@ -26,20 +26,20 @@
           </a>
         </li>
 
-        <li class="nav-item" >
+        <li class="nav-item" *ngIf="canSeeReportes">
           <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/historialped')">
             <i class="fas fa-circle-nodes"></i><span *ngIf="isMenuOpen"> Triangulaciones Efectuadas</span>
           </a>
         </li>
 
-        <li class="nav-item" >
+        <li class="nav-item" *ngIf="canSeeReportes">
           <a class="nav-link menu__link" href="#" data-bs-toggle="collapse" data-bs-target="#reportesDropdown" aria-expanded="false">
             <i class="fas fa-chart-line"></i><span *ngIf="isMenuOpen"> Reportes</span> <i class="fas fa-solid fa-angle-down menu__dropdown-icon"></i>
           </a>
           <div class="collapse menu__dropdown-content" id="reportesDropdown">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link menu__link"  *ngIf="usuariopadre === 'MASTERPROV'" href="javascript:void(0)" (click)="bajareportemaster()">
+                <a class="nav-link menu__link"  *ngIf="canSeeMasterReport" href="javascript:void(0)" (click)="bajareportemaster()">
                   <i class="fas fa-circle-nodes"></i><span *ngIf="isMenuOpen">Ventas totales</span>
                 </a>
               </li>
@@ -60,13 +60,13 @@
         </li>
 
 
-        <li class="nav-item" *ngIf="usuariopadre === 'MASTERPROV'">
+        <li class="nav-item" *ngIf="canSeeAdminSummary">
           <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin')">
-            <i class="fas fa-circle-nodes"></i><span *ngIf="isMenuOpen"> Resumen de ventas</span>
+            <i class="fas fa-chart-pie"></i><span *ngIf="isMenuOpen"> Mis ventas</span>
           </a>
         </li>
 
-        <li class="nav-item" *ngIf="usuariopadre === 'MASTERPROV'">
+        <li class="nav-item" *ngIf="canSeeAdmin">
           <a class="nav-link menu__link" href="javascript:void(0)" (click)="navigateTo('/admin/retenciones')">
             <i class="fas fa-file-invoice-dollar"></i><span *ngIf="isMenuOpen"> Gestión de pagos y retenciones</span>
           </a>

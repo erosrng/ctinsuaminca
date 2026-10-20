@@ -4,7 +4,8 @@ import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
 import { FooterComponent } from "../../components/footer/footer.component";
 import { SideBarComponent } from "../../components/side-bar/side-bar.component";
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
-import { AuthService } from './../../auth.service';
+import { AccessRole, AuthService } from './../../auth.service';
+import { ACCESS_PERMISSIONS } from './../../access.config';
 import { PortalcliLogicaService } from './../../services/portalcli-logica.service';
 import { Router } from '@angular/router';
 import { PROTEO_URL_ALONEINTER } from './../../app.config';
@@ -28,8 +29,17 @@ export class HomePageComponent {
   apiKey: string = '';
   isMenuOpen: boolean = true;
   toggleMenu = false;
-  adminOptions = false;
-  usuariopadre: string | null | undefined;
+
+  accessRole: AccessRole = 'VENDEDOR';
+  accessLabel: string = 'Vendedor';
+  accessIcon: string = 'fa-user';
+  accessDescription: string = 'Reportes y tu cuenta';
+
+  canSeeVentas: boolean = false;
+  canSeeReportes: boolean = false;
+  canSeeAdmin: boolean = false;
+  canSeeAdminSummary: boolean = false;
+  canSeeMasterReport: boolean = false;
 
   constructor(
     public authService: AuthService, 
@@ -49,7 +59,6 @@ export class HomePageComponent {
 
     ngOnInit() {
       // Obtener el token y los datos del usuario
-      this.usuariopadre = this.authService.getUsuarioPadre(); 
       const token = this.authService.getToken();
       //this.userData = this.authService.getUserData(); // Obtener los datos del usuario
   
@@ -58,12 +67,18 @@ export class HomePageComponent {
         this.isMenuOpen = isOpen;
       });
 
-      const aux = localStorage.getItem('userType')
-      if (aux === 'MASTERPROV') {
-        this.adminOptions = true;
-      } else {
-        this.adminOptions = false;
-      }
+      this.accessRole = this.authService.getAccessRole();
+      this.accessLabel = this.authService.getAccessLabel();
+      this.accessIcon = this.authService.getAccessIcon();
+      this.accessDescription = this.authService.getAccessDescription();
+
+      // Accesos por perfil
+      const permissions = ACCESS_PERMISSIONS[this.accessRole];
+      this.canSeeVentas = permissions.ventas;
+      this.canSeeReportes = permissions.reportes;
+      this.canSeeAdmin = permissions.admin;
+      this.canSeeAdminSummary = permissions.adminSummary;
+      this.canSeeMasterReport = permissions.masterReport;
     }
 
     navigateTo(route: string) {

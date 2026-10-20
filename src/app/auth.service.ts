@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
+export type AccessRole = 'SUPERPROV' | 'MASTERPROV' | 'ADMINPROV' | 'VENTAS' | 'VENDEDOR';
+
 interface DecodedToken {
   proveed: string | null;
   usuariopadre: string | null;
@@ -59,9 +61,12 @@ export class AuthService {
     this.token = null;
     this.decodedToken = null;
     localStorage.removeItem('token');
+    localStorage.removeItem('loginUser');
+    localStorage.removeItem('userType');
   }
 
   getUsuario(): string | null {
+    this.getToken();
     return this.decodedToken ? this.decodedToken.usuario : null;
   }
 
@@ -85,7 +90,93 @@ export class AuthService {
     return this.decodedToken ? this.decodedToken.tipo_u : null;
   }
   getUsuarioPadre(): string | null {
+    this.getToken();
     return this.decodedToken ? this.decodedToken.usuariopadre : null;
+  }
+
+  /*
+   * Perfiles del portal:
+   * SUPERPROV  -> acceso total (master master)
+   * MASTERPROV -> acceso completo del proveedor
+   * ADMINPROV  -> solo administración (pagos y retenciones)
+   * PTPRV / SPRVTRANSFE -> perfiles de ventas
+   * Cualquier otro usuario -> vendedor
+   */
+  private static readonly ROLE_BY_CODE: Record<string, AccessRole> = {
+    SUPERPROV: 'SUPERPROV',
+    MASTERPROV: 'MASTERPROV',
+    ADMINPROV: 'ADMINPROV',
+    PTPRV: 'VENTAS',
+    SPRVTRANSFE: 'VENTAS',
+  };
+
+  private getAccessCodes(): string[] {
+    return [
+      (this.getUsuario() || '').trim().toUpperCase(),
+      (localStorage.getItem('loginUser') || '').trim().toUpperCase(),
+      (this.getUsuarioPadre() || '').trim().toUpperCase(),
+    ].filter((code) => !!code);
+  }
+
+  private isTransferUser(): boolean {
+    return this.getAccessCodes().includes('SPRVTRANSFE');
+  }
+
+  getAccessRole(): AccessRole {
+    for (const code of this.getAccessCodes()) {
+      const role = AuthService.ROLE_BY_CODE[code];
+      if (role) {
+        return role;
+      }
+    }
+    return 'VENDEDOR';
+  }
+
+  getAccessLabel(): string {
+    switch (this.getAccessRole()) {
+      case 'SUPERPROV':
+        return 'Super Master';
+      case 'MASTERPROV':
+        return 'Master Proveedor';
+      case 'ADMINPROV':
+        return 'Administrativo';
+      case 'VENTAS':
+        return this.isTransferUser() ? 'Transferencista' : 'Ventas';
+      default:
+        return 'Vendedor';
+    }
+  }
+
+  getAccessIcon(): string {
+    switch (this.getAccessRole()) {
+      case 'SUPERPROV':
+        return 'fa-crown';
+      case 'MASTERPROV':
+        return 'fa-star';
+      case 'ADMINPROV':
+        return 'fa-briefcase';
+      case 'VENTAS':
+        return this.isTransferUser() ? 'fa-right-left' : 'fa-chart-line';
+      default:
+        return 'fa-user';
+    }
+  }
+
+  getAccessDescription(): string {
+    switch (this.getAccessRole()) {
+      case 'SUPERPROV':
+        return 'Acceso total al portal';
+      case 'MASTERPROV':
+        return 'Ventas, pedidos y reportes';
+      case 'ADMINPROV':
+        return 'Pagos y retenciones';
+      case 'VENTAS':
+        return this.isTransferUser()
+          ? 'Transferencias y pedidos'
+          : 'Catálogo, pedidos y reportes';
+      default:
+        return 'Ventas, reportes y tu cuenta';
+    }
   }
   getAlmacen(): string | null {
     return this.decodedToken ? this.decodedToken.almacen : null;

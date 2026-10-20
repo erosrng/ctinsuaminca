@@ -10,80 +10,139 @@
         <div class="row">
           <div class="col-4">
             <div class="box-col">
-              <h1 class="text-center mb-5 mt-5">Bienvenido a nuestro Centro de Transferencia </h1>
+              <h1 class="text-center mb-5 mt-5">Bienvenido a nuestro Portal de Proveedores </h1>
               <img class="logo__lab mt-5" src="./../../../assets/images/logoprv/{{authService.getProveed()}}.png"
                 alt="">
             </div>
           </div>
 
           <div class="col-8">
-            <div class="box-col">
-              <h1 class="text-center mt-4 mb-4">Panel de Accesos</h1>
+            <div class="box-col panel-box" [ngClass]="'panel-box--' + accessRole.toLowerCase()">
+              <div class="panel-accesos">
 
-              <div class="panel-ventas panel-group" *ngIf="usuariopadre === 'MASTERPROV'">
-                <h2 class="panel-title"><i class="fas fa-shopping-cart"></i> Ventas</h2>
-                <div class="panel-grid">
-                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/pedidos')">
-                    <i class="fas fa-cart-plus"></i>
-                    <span>Catálogo</span>
-                  </a>
-                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/cargar-pedidos')">
-                    <i class="fas fa-upload"></i>
-                    <span>Cargar pedidos desde archivo</span>
-                  </a>
+                <header class="panel-accesos__header">
+                  <span class="panel-accesos__badge"><i class="fas fa-table-cells-large"></i></span>
+                  <div class="panel-accesos__heading">
+                    <h1 class="panel-accesos__title">Panel de Accesos</h1>
+                    <p class="panel-accesos__subtitle">Todo lo que necesitas, en un solo lugar</p>
+                  </div>
+                  <div class="panel-accesos__profile" [title]="accessDescription">
+                    <span class="panel-accesos__profile-icon"><i class="fas" [ngClass]="accessIcon"></i></span>
+                    <span class="panel-accesos__profile-text">
+                      <span class="panel-accesos__profile-label">{{ accessLabel }}</span>
+                      <span class="panel-accesos__profile-desc">{{ accessDescription }}</span>
+                    </span>
+                  </div>
+                </header>
+
+                <div class="panel-accesos__groups">
+
+                  <section class="access-group access-group--ventas" *ngIf="canSeeVentas">
+                    <h2 class="access-group__title"><i class="fas fa-shopping-cart"></i> Ventas</h2>
+                    <div class="access-grid">
+                      <a class="access-card" href="javascript:void(0)" (click)="navigateTo('/pedidos')">
+                        <span class="access-card__icon"><i class="fas fa-cart-plus"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Catálogo</span>
+                          <span class="access-card__desc">Explora productos y arma tu pedido</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                      <a class="access-card" href="javascript:void(0)" (click)="navigateTo('/cargar-pedidos')">
+                        <span class="access-card__icon"><i class="fas fa-file-arrow-up"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Cargar pedidos</span>
+                          <span class="access-card__desc">Sube tu pedido desde un archivo</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                    </div>
+                  </section>
+
+                  <section class="access-group access-group--reportes" *ngIf="canSeeReportes">
+                    <h2 class="access-group__title"><i class="fas fa-chart-line"></i> Reportes</h2>
+                    <div class="access-grid">
+                      <a class="access-card" href="javascript:void(0)" (click)="navigateTo('/historialped')">
+                        <span class="access-card__icon"><i class="fas fa-circle-nodes"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Triangulaciones efectuadas</span>
+                          <span class="access-card__desc">Consulta el historial de pedidos</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                      <a class="access-card" href="javascript:void(0)" (click)="bajareporteunico()">
+                        <span class="access-card__icon"><i class="fas fa-user-tie"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Ventas del usuario</span>
+                          <span class="access-card__desc">Descarga tu reporte de ventas</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                      <a class="access-card" href="javascript:void(0)" (click)="bajareportemaster()" *ngIf="canSeeMasterReport">
+                        <span class="access-card__icon"><i class="fas fa-users"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Ventas totales</span>
+                          <span class="access-card__desc">Reporte consolidado de ventas</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                      <a class="access-card" href="javascript:void(0)" (click)="navigateTo('/admin')" *ngIf="canSeeAdminSummary">
+                        <span class="access-card__icon"><i class="fas fa-chart-pie"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Mis ventas</span>
+                          <span class="access-card__desc">Consulta el resumen de tus ventas</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                      <a class="access-card" href="javascript:void(0)" (click)="bajareporteinv()">
+                        <span class="access-card__icon"><i class="fas fa-boxes"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Inventario</span>
+                          <span class="access-card__desc">Existencias disponibles por almacén</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                    </div>
+                  </section>
+
+                  <section class="access-group access-group--admin" *ngIf="canSeeAdmin">
+                    <h2 class="access-group__title"><i class="fas fa-cog"></i> Administrativo</h2>
+                    <div class="access-grid">
+                      <a class="access-card" href="javascript:void(0)" (click)="navigateTo('/admin/retenciones')">
+                        <span class="access-card__icon"><i class="fas fa-file-invoice-dollar"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Gestión de pagos y retenciones</span>
+                          <span class="access-card__desc">Administra pagos y retenciones</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                    </div>
+                  </section>
+
+                  <section class="access-group access-group--cuenta">
+                    <h2 class="access-group__title"><i class="fas fa-user"></i> Mi cuenta</h2>
+                    <div class="access-grid">
+                      <a class="access-card" href="javascript:void(0)" (click)="navigateTo('/miperfil')">
+                        <span class="access-card__icon"><i class="fas fa-user-edit"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Perfil</span>
+                          <span class="access-card__desc">Consulta los datos de tu cuenta</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                      <a class="access-card access-card--logout" href="javascript:void(0)" (click)="logout()">
+                        <span class="access-card__icon"><i class="fas fa-sign-out-alt"></i></span>
+                        <span class="access-card__body">
+                          <span class="access-card__name">Cerrar sesión</span>
+                          <span class="access-card__desc">Salir del portal de proveedores</span>
+                        </span>
+                        <i class="fas fa-arrow-right access-card__arrow"></i>
+                      </a>
+                    </div>
+                  </section>
+
                 </div>
               </div>
-
-              <div class="panel-ventas panel-group">
-                <h2 class="panel-title"><i class="fas fa-chart-line"></i> Reportes</h2>
-                <div class="panel-grid">
-                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/historialped')">
-                    <i class="fas fa-circle-nodes"></i>
-                    <span>Triangulaciones Efectuadas</span>
-                  </a>
-                  <a class="panel-option" href="javascript:void(0)" (click)="bajareporteunico()">
-                    <i class="fas fa-user-tie"></i>
-                    <span>Ventas del usuario</span>
-                  </a>
-                  <a class="panel-option" href="javascript:void(0)" (click)="bajareportemaster()" *ngIf="usuariopadre === 'MASTERPROV'">
-                    <i class="fas fa-users"></i>
-                    <span>Ventas totales</span>
-                  </a>
-                  <a class="panel-option" href="javascript:void(0)" (click)="bajareporteinv()">
-                    <i class="fas fa-boxes"></i>
-                    <span>Inventario</span>
-                  </a>
-                </div>
-              </div>
-
-              <div class="panel-admin panel-group" *ngIf="usuariopadre === 'MASTERPROV'">
-                <h2 class="panel-title"><i class="fas fa-cog"></i> Administrativo</h2>
-                <div class="panel-grid">
-                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/admin')">
-                    <i class="fas fa-chart-pie"></i>
-                    <span>Resumen de ventas</span>
-                  </a>
-                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/admin/retenciones')">
-                    <i class="fas fa-file-invoice-dollar"></i>
-                    <span>Gestión de pagos y retenciones</span>
-                  </a>
-                </div>
-              </div>
-
-              <div class="panel-perfil panel-group">
-                <h2 class="panel-title"><i class="fas fa-user"></i> Mi cuenta</h2>
-                <div class="panel-grid">
-                  <a class="panel-option" href="javascript:void(0)" (click)="navigateTo('/miperfil')">
-                    <i class="fas fa-user-edit"></i>
-                    <span>Perfil</span>
-                  </a>
-                  <a class="panel-option panel-logout" href="javascript:void(0)" (click)="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Cerrar sesión</span>
-                  </a>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>

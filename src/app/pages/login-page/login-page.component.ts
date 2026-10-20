@@ -89,16 +89,13 @@ export class LoginPageComponent implements AfterViewInit {
           this.userInput.nativeElement.focus(); // Enfoca el input de usuario
         } else {
           this.authService.setToken(response.api_key);
+          localStorage.setItem('loginUser', this.userData.user.trim().toUpperCase());
           localStorage.setItem('nombre', response.userdata.nombre);
           localStorage.setItem('nomprv', response.userdata.nomprv);
           localStorage.setItem('usuario', response.userdata.usuario);
           localStorage.setItem('proveed', response.userdata.proveed);
           localStorage.setItem('emailprov', response.userdata.email);
-          if (response.userdata.usuariopadre === 'MASTERPROV') {
-            localStorage.setItem('userType', response.userdata.usuariopadre);
-          } else {
-            localStorage.setItem('userType', 'VENDEDOR');
-          }
+          localStorage.setItem('userType', this.authService.getAccessRole());
           /*if(response.userdata.usuariopadre == 'MASTERPROV'){
             this.route.navigate(['/admin']);
           }else{*/

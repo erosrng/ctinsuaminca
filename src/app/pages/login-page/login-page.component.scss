@@ -77,8 +77,10 @@
 }
 
 .portal__logo {
-    width: 60%;
-    margin-bottom: 1rem;
+    width: 70%;
+    max-width: 38rem;
+    height: auto;
+    margin-bottom: 1.5rem;
 }
 
 .portal__title {
@@ -319,7 +321,7 @@
             display: none;
         }
         .portal__logo {
-            width: 20%;
+            width: 60%;
             margin-top: 1rem;
         }
         .portal__form {
