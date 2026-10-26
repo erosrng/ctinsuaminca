@@ -505,12 +505,12 @@ export class CarshopComponent implements OnInit, AfterViewInit {
                 this.isLoading = false;
                 this.ocultarLoader();
                 
-                // Error de conexión/API
+                // Error de conexión/API (status 0: el servidor no respondió a tiempo)
                 Swal.fire({
                     title: 'Error de conexión',
-                    text: error.message || 'No se pudo conectar con el servidor',
+                    text: 'El servidor no respondió a tiempo. Su pedido pudo haberse registrado: revise el carrito antes de reintentar.',
                     icon: 'error',
-                    confirmButtonText: 'Reintentar'
+                    confirmButtonText: 'Entendido'
                 });
                 console.error('Error de la API:', error);
             }
