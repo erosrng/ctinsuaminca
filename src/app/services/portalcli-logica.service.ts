@@ -295,35 +295,6 @@ export class PortalcliLogicaService {
     );
   }
 
-  // PROVISIONAL: devuelve un mapa codigoa -> cantidad del carrito LOCAL
-  // (la lista de inventario viene de la nube y no ve el carrito local)
-  obtenerCantidadesCarrito(codCli: string, almacen: string): Observable<{ [codigoa: string]: number }> {
-    const usuario = this.authService.getCodCli();
-    const token = this.authService.getToken();
-    const formData = new FormData();
-    const headers = new HttpHeaders({
-      'X-Auth-Token': `${token}`
-    });
-    formData.append('codCli', codCli);
-    formData.append('almacen', almacen ?? '');
-    formData.append('usuario', usuario ?? '');
-
-    const apiUrl = `${API_URL}opencardb`;
-
-    return this.http.post(apiUrl, formData, { headers }).pipe(
-      map((response: any) => {
-        const items = Array.isArray(response?.data) ? response.data : [];
-        const mapa: { [codigoa: string]: number } = {};
-        items.forEach((item: any) => {
-          if (item?.codigoa != null && item?.cant != null) {
-            mapa[item.codigoa] = parseInt(item.cant, 10) || 0;
-          }
-        });
-        return mapa;
-      })
-    );
-  }
-
   actualizarCantidad(id: string, codigo: string, cantidad: number): Observable<any> {
     const token = this.authService.getToken();
     const formData = new FormData();

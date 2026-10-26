@@ -409,9 +409,7 @@ export class CarshopComponent implements OnInit, AfterViewInit {
         const headers = new HttpHeaders({
             'X-Auth-Token': `${token}`
         });
-        const apiUrl = `${API_URL}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login)
-        //const apiUrl = `${API_URLINTER}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login) via proxy d2wnv
-        //const apiUrl = `${API_URLINTER}enviapedweb`;
+        const apiUrl = `${API_URLINTER}enviapedweb`;
 
         Swal.fire({
             title: '¿Desea enviar el pedido?',
@@ -485,17 +483,9 @@ export class CarshopComponent implements OnInit, AfterViewInit {
                     });
                 } else {
                     // Error del servidor (result: false)
-                    // PROVISIONAL: mostrar traza debug_leeimpedido que devuelve la API
-                    let detalle = '';
-                    try {
-                        const debug = response?.data?.debug_leeimpedido;
-                        detalle = debug
-                            ? '<pre style="text-align:left;font-size:0.8em;max-height:320px;overflow:auto;">' + JSON.stringify(debug, null, 2) + '</pre>'
-                            : '';
-                    } catch (e) { detalle = ''; }
                     Swal.fire({
                         title: 'Error',
-                        html: (response.message || 'Ocurrió un error al procesar el pedido') + detalle,
+                        text: response.message || 'Ocurrió un error al procesar el pedido',
                         icon: 'error',
                         confirmButtonText: 'Entendido'
                     });
@@ -505,12 +495,12 @@ export class CarshopComponent implements OnInit, AfterViewInit {
                 this.isLoading = false;
                 this.ocultarLoader();
                 
-                // Error de conexión/API (status 0: el servidor no respondió a tiempo)
+                // Error de conexión/API
                 Swal.fire({
                     title: 'Error de conexión',
-                    text: 'El servidor no respondió a tiempo. Su pedido pudo haberse registrado: revise el carrito antes de reintentar.',
+                    text: error.message || 'No se pudo conectar con el servidor',
                     icon: 'error',
-                    confirmButtonText: 'Entendido'
+                    confirmButtonText: 'Reintentar'
                 });
                 console.error('Error de la API:', error);
             }

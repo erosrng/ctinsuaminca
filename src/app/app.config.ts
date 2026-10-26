@@ -15,21 +15,12 @@ export const API_URL2 = 'http://10.0.100.2/practica/api/';
 export const PROTEO_URL = 'http://10.0.100.2/practica/api/ptprv/';
 export const API_FAST ='http://127.0.0.1:8000';*/
 
-//ACCESO PARA TRABAJAR (PROVISIONAL: TODO LOCAL via proxy d2wnv -> servidor ERP)
-export const PROTEO_URL_ALONE = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/';
-export const API_URL = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/post/';
-export const API_URL2 = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/';
-export const PROTEO_URL = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/';
+//ACCESO PARA TRABAJAR 
+export const PROTEO_URL_ALONE = 'https://insuaminca.org/insuaminca/';
+export const API_URL = 'https://insuaminca.org/insuaminca/api/ptprv/post/';
+export const API_URL2 = 'https://insuaminca.org/insuaminca/api/ptprv/';
+export const PROTEO_URL = 'https://insuaminca.org/insuaminca/api/ptprv/';
 export const API_FAST ='http://3.143.124.47:5000';
-
-// NUBE ORIGINAL (revertir cuando se indique)
-// export const PROTEO_URL_ALONE = 'https://insuaminca.org/insuaminca/';
-// export const API_URL = 'https://insuaminca.org/insuaminca/api/ptprv/post/';
-// export const API_URL2 = 'https://insuaminca.org/insuaminca/api/ptprv/';
-// export const PROTEO_URL = 'https://insuaminca.org/insuaminca/api/ptprv/';
-
-// NUBE - solo para la carga pesada de inventario (inventarioprv)
-export const API_URL_NUBE = 'https://insuaminca.org/insuaminca/api/ptprv/post/';
 
 // ACCESO FTP EXTERNO
 export const PROTEO_URL_ALONEINTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/';
