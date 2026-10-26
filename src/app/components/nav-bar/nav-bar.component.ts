@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, OnDestroy, ViewChild, Output, EventEmitter } from '@angular/core';
 import { AuthService } from './../../auth.service';
+import { ACCESS_PERMISSIONS } from './../../access.config';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { API_URL } from './../../app.config';
 import { PortalcliLogicaService } from './../../services/portalcli-logica.service';
@@ -29,6 +30,7 @@ export class NavBarComponent implements OnInit {
   userData: any;
   apiKey: string = '';
   isMenuOpen: boolean = true;
+  canSeeVentas: boolean = true;
 
   productosEnCarrito: any[] = [];
   productosEnCarritoNumber: string = '';
@@ -78,8 +80,12 @@ export class NavBarComponent implements OnInit {
     this.grup = this.authService.getLgrup();
     this.portalcliLogicaService.buscaalmacen();
 
+    this.canSeeVentas = ACCESS_PERMISSIONS[this.authService.getAccessRole()].ventas;
+
     //if (this.rutaActual != 'carrito') {
+    if (this.canSeeVentas) {
       this.revisarCarrito();
+    }
     //}
   }
 

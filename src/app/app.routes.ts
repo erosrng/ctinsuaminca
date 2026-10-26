@@ -10,6 +10,7 @@ import { HistorialpedComponent } from "./components/historialped/historialped.co
 
 
 import { authGuard } from './auth.guard';
+import { adminGuard, adminSummaryGuard, reportsGuard, salesGuard } from './role.guard';
 import { AdminHomeComponent } from './pages/admin-pages/admin-home/admin-home.component';
 import { AdminPedidosVendedorComponent } from './pages/admin-pages/admin-pedidos-vendedor/admin-pedidos-vendedor.component';
 import { AdminRetencionesComponent } from './pages/admin-pages/admin-retenciones/admin-retenciones.component';
@@ -21,15 +22,15 @@ export const routes: Routes = [
     { path: '', component: LoginPageComponent},
     { path: 'login', component: LoginPageComponent }, 
     { path: 'home', component: HomePageComponent, canActivate: [authGuard] },
-    { path: 'carrito', component: CarritoPageComponent, canActivate: [authGuard] },
+    { path: 'carrito', component: CarritoPageComponent, canActivate: [authGuard, salesGuard] },
     { path: 'miperfil', component: MiperfilPageComponent, canActivate: [authGuard] },
-    { path: 'pedidos', component: PedidosPageComponent, canActivate: [authGuard] },
-    { path: 'tomaexcel', component: TomaexcelPageComponent, canActivate: [authGuard] },
-    { path: 'pagos', component: PagosPageComponent, canActivate: [authGuard] },
-    { path: 'historialped', component: HistorialPedidosComponent, canActivate: [authGuard] },
-    { path: 'admin', component: AdminHomeComponent, canActivate: [authGuard] },
-    { path: 'admin/pedidos', component: AdminPedidosVendedorComponent, canActivate: [authGuard] },
-    { path: 'admin/retenciones', component: AdminRetencionesComponent, canActivate: [authGuard] },
-    { path: 'cargar-pedidos', component: UploadPedidosComponent, canActivate: [authGuard]},
-    { path: 'resumen-cliente', component: ResumenClienteComponent}
+    { path: 'pedidos', component: PedidosPageComponent, canActivate: [authGuard, salesGuard] },
+    { path: 'tomaexcel', component: TomaexcelPageComponent, canActivate: [authGuard, salesGuard] },
+    { path: 'pagos', component: PagosPageComponent, canActivate: [authGuard, salesGuard] },
+    { path: 'historialped', component: HistorialPedidosComponent, canActivate: [authGuard, reportsGuard] },
+    { path: 'admin', component: AdminHomeComponent, canActivate: [authGuard, adminSummaryGuard] },
+    { path: 'admin/pedidos', component: AdminPedidosVendedorComponent, canActivate: [authGuard, adminSummaryGuard] },
+    { path: 'admin/retenciones', component: AdminRetencionesComponent, canActivate: [authGuard, adminGuard] },
+    { path: 'cargar-pedidos', component: UploadPedidosComponent, canActivate: [authGuard, salesGuard]},
+    { path: 'resumen-cliente', component: ResumenClienteComponent, canActivate: [authGuard, salesGuard]}
 ];

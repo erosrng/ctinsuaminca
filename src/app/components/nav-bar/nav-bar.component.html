@@ -28,7 +28,7 @@
                           PROVEEDOR<br>
                           {{ authService.getNomprv() }}
                       </div>
-                      <div class="col details__cli">
+                      <div class="col details__cli" *ngIf="canSeeVentas">
                           <!-- <i class="fas fa-shopping-cart cart-icon" (click)="navigateTo('/carrito')"></i>
                           <span class="fs-4"> {{productosEnCarritoNumber}}</span> -->
 
