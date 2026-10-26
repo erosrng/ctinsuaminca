@@ -28,6 +28,9 @@ export const API_FAST ='http://3.143.124.47:5000';
 // export const API_URL2 = 'https://insuaminca.org/insuaminca/api/ptprv/';
 // export const PROTEO_URL = 'https://insuaminca.org/insuaminca/api/ptprv/';
 
+// NUBE - solo para la carga pesada de inventario (inventarioprv)
+export const API_URL_NUBE = 'https://insuaminca.org/insuaminca/api/ptprv/post/';
+
 // ACCESO FTP EXTERNO
 export const PROTEO_URL_ALONEINTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/';
 export const API_URLINTER = 'https://d2wnvkodoh477y.cloudfront.net/proteoerp/api/ptprv/post/';
