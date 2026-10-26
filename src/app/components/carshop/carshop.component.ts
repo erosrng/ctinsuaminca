@@ -409,7 +409,8 @@ export class CarshopComponent implements OnInit, AfterViewInit {
         const headers = new HttpHeaders({
             'X-Auth-Token': `${token}`
         });
-        const apiUrl = `${API_URLINTER}enviapedweb`;
+        const apiUrl = `${API_URLINTER}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login) via proxy d2wnv
+        //const apiUrl = `${API_URLINTER}enviapedweb`;
 
         Swal.fire({
             title: '¿Desea enviar el pedido?',
@@ -483,9 +484,17 @@ export class CarshopComponent implements OnInit, AfterViewInit {
                     });
                 } else {
                     // Error del servidor (result: false)
+                    // PROVISIONAL: mostrar traza debug_leeimpedido que devuelve la API
+                    let detalle = '';
+                    try {
+                        const debug = response?.data?.debug_leeimpedido;
+                        detalle = debug
+                            ? '<pre style="text-align:left;font-size:0.8em;max-height:320px;overflow:auto;">' + JSON.stringify(debug, null, 2) + '</pre>'
+                            : '';
+                    } catch (e) { detalle = ''; }
                     Swal.fire({
                         title: 'Error',
-                        text: response.message || 'Ocurrió un error al procesar el pedido',
+                        html: (response.message || 'Ocurrió un error al procesar el pedido') + detalle,
                         icon: 'error',
                         confirmButtonText: 'Entendido'
                     });

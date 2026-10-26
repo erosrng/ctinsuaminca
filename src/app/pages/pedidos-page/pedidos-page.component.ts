@@ -840,7 +840,8 @@ sortData(sortField: string) {
         const headers = new HttpHeaders({
           'Authorization': `${token}`
         });
-        const apiUrl = `${API_URLINTER}enviapedweb`;
+        const apiUrl = `${API_URLINTER}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login) via proxy d2wnv
+        //const apiUrl = `${API_URLINTER}enviapedweb`;
       
         Swal.fire({
           
