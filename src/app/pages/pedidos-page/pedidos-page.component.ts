@@ -840,7 +840,7 @@ sortData(sortField: string) {
         const headers = new HttpHeaders({
           'Authorization': `${token}`
         });
-        const apiUrl = `${API_URLINTER}enviapedweb`;
+        const apiUrl = `${API_URL}enviapedweb`;
       
         Swal.fire({
           
