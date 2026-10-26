@@ -409,7 +409,7 @@ export class CarshopComponent implements OnInit, AfterViewInit {
         const headers = new HttpHeaders({
             'X-Auth-Token': `${token}`
         });
-        const apiUrl = `${API_URL}enviapedweb`;
+        const apiUrl = `${API_URLINTER}enviapedweb`;
 
         Swal.fire({
             title: '¿Desea enviar el pedido?',

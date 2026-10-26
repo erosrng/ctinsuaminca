@@ -62,7 +62,7 @@ export class ProteoService {
     const headers = new HttpHeaders({
       'X-Auth-Token': `${token}`
     });
-    const apiUrl = this.apiUrl + `post/multipedweb`;
+    const apiUrl = this.apiUrl2 + `post/multipedweb`;
     //const apiUrl = this.apiUrl + `post/multiped`;
     return this.httpClient.post(apiUrl, info, {headers: headers})
   }
@@ -75,7 +75,7 @@ export class ProteoService {
     const headers = new HttpHeaders({
       'X-Auth-Token': `${token}`
     });
-    const apiUrl = this.apiUrl + `post/listapeweb`;
+    const apiUrl = this.apiUrl2 + `post/listapeweb`;
     //const apiUrl = this.apiUrl + `post/listape`;
     return this.httpClient.post(apiUrl, info, {headers: headers})
   }
