@@ -114,6 +114,7 @@ export class AuthService {
     return [
       (this.getUsuario() || '').trim().toUpperCase(),
       (localStorage.getItem('loginUser') || '').trim().toUpperCase(),
+      (localStorage.getItem('usuario') || '').trim().toUpperCase(),
       (this.getUsuarioPadre() || '').trim().toUpperCase(),
     ].filter((code) => !!code);
   }
