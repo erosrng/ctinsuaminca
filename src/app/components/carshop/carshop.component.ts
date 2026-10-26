@@ -409,7 +409,8 @@ export class CarshopComponent implements OnInit, AfterViewInit {
         const headers = new HttpHeaders({
             'X-Auth-Token': `${token}`
         });
-        const apiUrl = `${API_URLINTER}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login) via proxy d2wnv
+        const apiUrl = `${API_URL}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login)
+        //const apiUrl = `${API_URLINTER}enviarpedidodirecto`; // PROVISIONAL: envio directo (insert impedido + login) via proxy d2wnv
         //const apiUrl = `${API_URLINTER}enviapedweb`;
 
         Swal.fire({
