@@ -265,7 +265,7 @@ verInfoAbono(d: DetalleRetencion) {
 
 camposDetalle(obj: any): string[] {
     if (!obj) return [];
-    const campos = ['numppro', 'tipoppro', 'fecha', 'abono', 'abonod', 'cambio', 'observa'];
+    const campos = ['numppro', 'tipoppro', 'fecha', 'abono', 'cambio', 'abonod', 'observa'];
     return campos.filter(k => k in obj);
   }
 
