@@ -265,7 +265,8 @@ verInfoAbono(d: DetalleRetencion) {
 
 camposDetalle(obj: any): string[] {
     if (!obj) return [];
-    return Object.keys(obj).filter(key => key !== 'idsprm' && key !== 'rtnc');
+    const campos = ['numppro', 'tipoppro', 'fecha', 'abono', 'abonod', 'cambio', 'observa'];
+    return campos.filter(k => k in obj);
   }
 
   columnName(key: string): string {
