@@ -42,6 +42,7 @@ interface Retencion {
   idscst: number;
   saldo: number;
   saldod: number;
+  abonosd: number;
   despp: string;
 }
 

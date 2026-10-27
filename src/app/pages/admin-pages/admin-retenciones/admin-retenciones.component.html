@@ -47,11 +47,12 @@
                                                 <th>Monto</th>
                                                 <th>Abonos</th>
                                                 <th>Saldo</th>
-                                                <th>Saldo $</th>
                                                 <th>Dcto PP</th>
                                                 <th>Tasa</th>
                                                 <th>Monto $</th>
-                                                <th>Comp. Retención</th>
+                                                <th>Abonos $</th>
+                                                <th>Saldo $</th>
+                                                <!-- <th>Comp. Retención</th> -->
                                                 <th>Ret. IVA / Ret. ISLR</th>
                                             </tr>
                                         </thead>
@@ -68,11 +69,12 @@
                                                 <td class="text-end">{{r.monto | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.abonos | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.saldo | number:'1.2-2'}}</td>
-                                                <td class="text-end">{{r.saldod | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.despp}}</td>
                                                 <td class="text-end">{{r.tasadolar | number:'1.2-2'}}</td>
                                                 <td class="text-end">{{r.montod | number:'1.2-2'}}</td>
-                                                <td>
+                                                <td class="text-end">{{r.abonosd | number:'1.2-2'}}</td>
+                                                <td class="text-end">{{r.saldod | number:'1.2-2'}}</td>
+                                                <!-- <td>
                                                     <span *ngIf="r.idriva" class="comp-retencion" [attr.title]="'Comprobante de retención: ' + r.nrocomp">
                                                         <i class="fas fa-file-invoice"></i>
                                                         <span class="comp-num">{{r.nrocomp}}</span>
@@ -80,7 +82,7 @@
                                                     <span *ngIf="!r.idriva" class="badge badge-no-retention" [attr.title]="'Este documento no tiene comprobante de retención'">
                                                         <i class="fas fa-minus-circle"></i> Sin retención
                                                     </span>
-                                                </td>
+                                                </td> -->
                                                 <td (click)="$event.stopPropagation()">
                                                     <button *ngIf="r.idriva" class="btn btn-sm btn-success" (click)="imprimir(r.idriva)" title="Imprimir retención IVA">
                                                         <i class="fas fa-print"></i>
@@ -94,7 +96,7 @@
                                                 </td>
                                             </tr>
                                             <tr *ngIf="r.expanded" class="detail-row">
-                                                <td colspan="14">
+                                                <td colspan="13">
                                                     <div class="detail-container" *ngIf="!r.loading && !r.error">
                                                         <div class="detail-header">
                                                             <strong>Detalle del documento {{r.tipo_doc}} {{r.numero}}</strong>
