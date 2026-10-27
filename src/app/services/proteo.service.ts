@@ -28,7 +28,7 @@ export class ProteoService {
     const headers = new HttpHeaders({
       'X-Auth-Token': `${token}`
     });
-    const apiUrl2 = this.apiUrl + `post/getfile`;
+    const apiUrl2 = this.apiUrl2 + `post/getfile`;
     return this.httpClient.post(apiUrl2, info, { headers: headers, responseType: 'blob', })
   }
 
@@ -39,7 +39,7 @@ export class ProteoService {
     const headers = new HttpHeaders({
       'X-Auth-Token': `${token}`
     });
-    const apiUrl = this.apiUrl + `get/cmatriz`;
+    const apiUrl = this.apiUrl2 + `get/cmatriz`;
     return this.httpClient.post(apiUrl,formData, {headers: headers})
   }
 
