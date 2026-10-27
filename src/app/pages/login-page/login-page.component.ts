@@ -70,7 +70,7 @@ export class LoginPageComponent implements AfterViewInit {
     formData.append('user', this.userData.user);
     formData.append('password', this.userData.password);
 
-    const apiUrl = `${API_URL2INTER}logincli/logincli`;
+    const apiUrl = `${API_URL2INTER}logincli/sprvuser`;
 
     this.login(apiUrl, formData)
 
