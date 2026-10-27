@@ -275,8 +275,8 @@ camposDetalle(obj: any): string[] {
       tipoppro: 'Tipo',
       fecha: 'Fecha',
       abono: 'Abono',
-      abonod: 'Abono $',
       cambio: 'Cambio',
+      abonod: 'Abono $',
       observa: 'Observación'
     };
     return nombres[key] || key;
