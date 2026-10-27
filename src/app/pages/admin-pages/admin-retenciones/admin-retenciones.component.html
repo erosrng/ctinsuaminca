@@ -83,11 +83,11 @@
                                                         <i class="fas fa-minus-circle"></i> Sin retención
                                                     </span>
                                                 </td> -->
-                                                <td (click)="$event.stopPropagation()">
+                                                <td (click)="$event.stopPropagation()" class="text-center">
                                                     <button *ngIf="r.idriva" class="btn btn-sm btn-success" (click)="imprimir(r.idriva)" title="Imprimir retención IVA">
                                                         <i class="fas fa-print"></i>
                                                     </button>
-                                                    <button *ngIf="r.reten > 0 && (r.idgser || r.idscst)" class="btn btn-sm btn-warning" (click)="imprimirIslr(r)" title="Imprimir retención ISLR">
+                                                    <button *ngIf="r.reten > 0 && (r.idgser || r.idscst)" class="btn btn-sm btn-warning ms-1" (click)="imprimirIslr(r)" title="Imprimir retención ISLR">
                                                         <i class="fas fa-file-invoice-dollar"></i>
                                                     </button>
                                                     <button *ngIf="!r.idriva && !(r.reten > 0 && (r.idgser || r.idscst))" class="btn btn-sm btn-secondary" disabled title="Sin retención para imprimir">
