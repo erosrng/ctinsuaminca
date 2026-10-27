@@ -263,10 +263,9 @@ verInfoAbono(d: DetalleRetencion) {
     return d && d.tipoppro === 'AN';
   }
 
-objectKeys(obj: any): string[] {
+camposDetalle(obj: any): string[] {
     if (!obj) return [];
-    const excluidos = ['tipo_doc', 'numero', 'mora', 'transac', 'estampa', 'hora', 'usuario', 'preten', 'creten', 'breten', 'reteiva', 'id', 'modificado', 'montod', 'abonod', 'cambiod', 'riva', 'pdescp', 'montpp', 'pdescpa', 'idsprm', 'cod_prv', 'rtnc'];
-    return Object.keys(obj).filter(key => !excluidos.includes(key));
+    return Object.keys(obj).filter(key => key !== 'idsprm' && key !== 'rtnc');
   }
 
   columnName(key: string): string {
@@ -274,10 +273,8 @@ objectKeys(obj: any): string[] {
       numppro: 'Número',
       tipoppro: 'Tipo',
       fecha: 'Fecha',
-      monto: 'Monto',
       abono: 'Abono',
-      ppago: 'Pago',
-      reten: 'Retención',
+      abonod: 'Abono $',
       cambio: 'Cambio',
       observa: 'Observación'
     };

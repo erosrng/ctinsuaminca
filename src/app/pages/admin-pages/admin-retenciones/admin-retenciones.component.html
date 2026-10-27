@@ -107,7 +107,7 @@
                                                             <table class="table table-sm detail-table">
                                                                 <thead>
                                                                     <tr>
-                                                                        <ng-container *ngFor="let key of objectKeys(r.detalle[0])">
+                                                                        <ng-container *ngFor="let key of camposDetalle(r.detalle[0])">
                                                                             <th>{{columnName(key)}}</th>
                                                                         </ng-container>
                                                                         <th>Documentos afectados</th>
@@ -115,7 +115,7 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr *ngFor="let d of r.detalle">
-                                                                        <ng-container *ngFor="let key of objectKeys(d)">
+                                                                        <ng-container *ngFor="let key of camposDetalle(d)">
                                                                             <td>
                                                                                 <ng-container *ngIf="key === 'tipoppro'">
                                                                                     <span class="tag tag-abono" *ngIf="d.tipoppro === 'AB'"><i class="fas fa-hand-holding-usd"></i> Abono</span>
