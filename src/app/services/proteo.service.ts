@@ -87,7 +87,7 @@ export class ProteoService {
     const headers = new HttpHeaders({
       'Authorization': `${token}`
     });
-    const apiUrl2 = this.apiUrl + `post/simplefile`;
+    const apiUrl2 = this.apiUrl2 + `post/simplefile`;
     return this.httpClient.post(apiUrl2, info, { headers: headers, responseType: 'blob', })
   }
 
